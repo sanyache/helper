@@ -39,6 +39,19 @@
 		<div class="loader"></div>
 	</div>
 	<!-- Preloader End -->
+	{% if messages %}
+	<div class="alert {{ message.tags }} alert-dismissible">
+		<ul class="messages">
+			{% for message in messages %}
+				<li class="{{ message.tags }}">
+					{{ message|safe }}
+					<a href="{% url 'home' %}" class="close" data-dismiss="alert" aria-label="close">
+						&times;</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
     {% include 'includes/header.html' %}
     {% block content %}{% endblock content %}
     {% include 'includes/footer.html' %}
