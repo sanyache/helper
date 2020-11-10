@@ -1029,7 +1029,12 @@ li.wt-rss a { background:#ff6600; }
 	display: table;
 	table-layout: fixed;
 }
-.wt-rightarea{float: right;}
+.wt-rightarea{
+	float: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .wt-navigation > ul > li > a{
 	margin: 20px 0;
 	padding: 10px 13px;
@@ -1121,6 +1126,13 @@ li.wt-rss a { background:#ff6600; }
 	padding: 0 0 0 20px;
 	border-left: 1px solid #ddd;
 }
+.wt-signUparea{
+	width: auto;
+	float: right;
+	margin: 20px 0;
+	padding: 0 0 0 20px;
+	border-left: 1px solid #ddd;
+}
 .wt-userimg{
 	margin: 0;
 	float: left;
@@ -1160,7 +1172,26 @@ li.wt-rss a { background:#ff6600; }
 	-webkit-box-shadow: 5px 10px 20px 0 rgba(0,0,0,0.25);
 	box-shadow: 5px 10px 20px 0 rgba(0,0,0,0.25);
 }
+.wt-signUpformhold{
+	top: 51px;
+	right: 0;
+	z-index: 9;
+	width: 350px;
+	display: none;	
+	overflow:hidden;
+	background: #fff;
+	border-radius:4px;
+	position: absolute;
+	line-height: normal;
+	-webkit-box-shadow: 5px 10px 20px 0 rgba(0,0,0,0.25);
+	box-shadow: 5px 10px 20px 0 rgba(0,0,0,0.25);
+}
 .wt-loginheader{
+	float: left;
+	width: 100%;
+	padding: 20px 20px 0;
+}
+.wt-signUpheader{
 	float: left;
 	width: 100%;
 	padding: 20px 20px 0;
@@ -1171,6 +1202,14 @@ li.wt-rss a { background:#ff6600; }
 	line-height: 16px;
 	display: inline-block;
 	vertical-align: middle; 
+}
+.wt-signUpheader span{
+	color: #323232;
+	font-size:16px;
+	line-height: 16px;
+	display: inline-block;
+	vertical-align: middle; 
+	margin-right: 65%;
 }
 .wt-loginheader a{
 	color: #ddd;
@@ -1214,7 +1253,7 @@ li.wt-rss a { background:#ff6600; }
 	position: absolute;
 	margin: -15px 0 0;
 }
-body.wt-login .wt-loginarea{display: none;}
+body.wt-login .wt-loginarea
 .wt-userlogedin{
 	float:right;
 	padding:20px;
@@ -1222,6 +1261,9 @@ body.wt-login .wt-loginarea{display: none;}
 	position:relative;
 	padding-right:0;
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .wt-userlogedin:before{
 	left: 0;
@@ -1242,7 +1284,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-username h3{
 	font-size:16px;
 	font-weight:400;
-	margin: 0 0 5px;
+	margin: 9px 0 5px;
 	line-height:16px;
 }
 .wt-username span{

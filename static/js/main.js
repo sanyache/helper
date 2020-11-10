@@ -50,6 +50,10 @@ jQuery(document).on('ready', function() {
 		event.preventDefault();
 		jQuery('.wt-loginarea .wt-loginformhold').slideToggle();
 	});
+	jQuery('#wt-signUpbtn, .wt-signUpheader a').on('click', function(event){
+		event.preventDefault();
+		jQuery('.wt-signUparea .wt-signUpformhold').slideToggle();
+	});
 	/*OPEN CLOSE */
 	jQuery('.wt-dropdown').on('click', function(event){
 		event.preventDefault();
