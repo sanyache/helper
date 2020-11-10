@@ -219,16 +219,14 @@
                                                        type="submit"
                                                        class="wt-btn do-login-button">Login
                                                     </button>
-                                                    <span class="wt-checkbox">
-                                                        <input id="wt-login" type="checkbox" name="rememberme">
-                                                        <label for="wt-login">Keep me logged in</label>
-                                                    </span>
                                                 </div>
                                             </fieldset>
                                             <div class="wt-loginfooterinfo">
-                                                <a href="{% url 'password_change' %}"
-                                                   class="wt-forgot-password">Forgot password?</a>
-                                                <a href="register.html">Create account</a>
+                                                <a href="{% url 'social:begin' 'facebook' %}"
+                                                   class="wt-forgot-password">Facebook</a>
+                                                <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                                    Goggle
+                                                </a>
                                             </div>
                                         </form>
                                         <form class="wt-formtheme wt-loginform do-forgot-password-form wt-hide-form">
@@ -299,7 +297,7 @@
                                                     <input type="password"
                                                            name="password1"
                                                            class="form-control"
-                                                           placeholder="Пароль не менбше 8 символів"
+                                                           placeholder="Пароль не меньше 8 символів"
                                                            required
                                                     >
                                                 </div>
