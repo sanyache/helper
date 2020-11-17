@@ -88,18 +88,26 @@
 								</div>
 							</div>
 							<div class="wt-categoryexpl">
-								<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 float-left">
+								{% for category in categories %}
+								<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 float-left">
 									<div class="wt-categorycontent">
-										<figure><img src="images/categories/img-01.png" alt="image description"></figure>
+										<figure><img src="{{ category.category_avatar.url }}"
+													 alt="image description"></figure>
 										<div class="wt-cattitle">
-											<h3><a href="javascrip:void(0);">Mobiles</a></h3>
+											<h3><a href="javascrip:void(0);">{{ category.name }}
+											    </a>
+											</h3>
 										</div>
 										<div class="wt-categoryslidup">
-											<p>Consectetur adipisicing elitaed eiusmod tempor incididuatna labore et dolore magna.</p>
-											<a href="javascript:void(0);">Explore <i class="fa fa-arrow-right"></i></a>
+											{% for subcategory in category.subcategories.all %}
+											<a href="javascript:void(0);">{{ subcategory }} <i
+													class="fa fa-arrow-right"></i></a><br/>
+											{% endfor %}
 										</div>
+
 									</div>
 								</div>
+								{% endfor %}
 								<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 float-left">
 									<div class="wt-categorycontent">
 										<figure><img src="images/categories/img-08.png" alt="image description"></figure>

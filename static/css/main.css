@@ -1602,7 +1602,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-categorycontent{
 	float: left;
 	width: 100%;
-	min-height: 255px;
+	min-height: 350px;
 	padding: 20px;
 	border-radius: 4px;
 	overflow: hidden;
@@ -1628,36 +1628,45 @@ body.wt-login .wt-userlogedin{display: block;}
 	align-items: center;
 	-webkit-align-content: center;
 	-ms-flex-line-pack: center;
+	background: linear-gradient(to right, #221b46, #492f4b);
 }
 .wt-categorycontent:hover{
 		-webkit-box-shadow: 5px 10px 20px 0 rgba(0,0,0,0.25);
 	box-shadow: 5px 10px 20px 0 rgba(0,0,0,0.25);
+	background: #fff;
 }
 .wt-categorycontent figure{
 	left: 50%;
 	margin: 0;
-	top: 75px;
-	left: 50%;
-	width: 65px;
-	margin: 0 auto;
+	top: 40px;
+	left: 40%;
+	width: 150px;
+	height: 125px;
+	margin: 10px auto;
 	margin-left:-32px;
 	position: absolute;
 }
-.wt-categorycontent:hover figure{top: -80px;}
+.wt-categorycontent:hover figure{top: -180px;}
 .wt-cattitle{
 	left: 0;
-	top: 160px;
+	top: 185px;
 	float: left;
 	width: 100%;
 	padding: 0 20px;
 	position: absolute;
 }
-.wt-categorycontent:hover .wt-cattitle{top:21%;}
+.wt-categorycontent:hover .wt-cattitle{top:10%;}
 .wt-cattitle h3{
-	margin: 0;
-	font-size: 18px;
+	margin: 40px 0 5px 0;
+	font-size: 22px;
 	font-weight: 400;
-	line-height: 20px;
+	line-height: 22px;
+}
+.wt-cattitle h3 a{
+	color: #fff;
+}
+.wt-categorycontent:hover .wt-cattitle h3 a{
+	color: #111;
 }
 .wt-categoryexpl > .float-left:nth-child(n+5){margin-top:30px; }
 .wt-categoryexpl .wt-btnarea{text-align: center;}
@@ -1683,14 +1692,14 @@ body.wt-login .wt-userlogedin{display: block;}
 	visibility: visible;
 }
 .wt-categoryslidup p{
-	font-size: 14px;
+	font-size: 18px;
 	margin: 0 0 28px;
-	line-height: 24px;
+	line-height: 25px;
 }
 .wt-categoryslidup a{
 	color: #55acee;
-	font-size: 14px;
-	line-height: 16px;
+	font-size: 18px;
+	line-height: 25px;
 }
 .wt-categoryslidup a i{font-size: 12px;}
 /* Join Company Style */

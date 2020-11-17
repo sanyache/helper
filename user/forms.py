@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Worker
 
 
 class SignUpForm(UserCreationForm):
@@ -11,3 +12,21 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name','email', 'password1', 'password2')
+
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+
+class WorkerForm(forms.ModelForm):
+
+    class Meta:
+        model = Worker
+        fields = ('cities', 'subcategories', 'title_image', 'describe')
+        widgets = {
+            'subcategories': forms.CheckboxSelectMultiple(),
+            'cities': forms.CheckboxSelectMultiple()
+        }

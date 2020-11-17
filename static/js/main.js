@@ -27,24 +27,46 @@ jQuery(document).on('ready', function() {
 	}
 	
 	/* Google Map */
-	if(jQuery('#wt-locationmap').length > 0){
-		var _wt_locationmap = jQuery('#wt-locationmap');
-		_wt_locationmap.gmap3({
-			marker: {
-				address: '1600 Elizabeth St, Melbourne, Victoria, Australia',
-				options: {
-					title: 'Robert Frost Elementary School'
-				}
-			},
-			map: {
-				options: {
-					zoom: 16,
-					scrollwheel: false,
-					disableDoubleClickZoom: true,
-				}
+	// if(jQuery('#wt-locationmap').length > 0){
+	// 	var _wt_locationmap = jQuery('#wt-locationmap');
+	// 	_wt_locationmap.gmap3({
+	// 		marker: {
+	// 			address: '1600 Elizabeth St, Melbourne, Victoria, Australia',
+	// 			options: {
+	// 				title: 'Robert Frost Elementary School'
+	// 			}
+	// 		},
+	// 		map: {
+	// 			options: {
+	// 				zoom: 16,
+	// 				scrollwheel: false,
+	// 				disableDoubleClickZoom: true,
+	// 			}
+	// 		}
+	// 	});
+	// }
+	jQuery('#categories').on('change', function(){
+		var category = $(this).val();
+		var url = $(this).attr('data-url');
+		console.log('id', category, url);
+		$.ajax({
+			url: url,
+			data: {'category': category},
+			success: function(data){
+				$.each(data, function(index, val){
+					console.log('data', val);
+					var li = $('<li></li>');
+					var inp = $('<input type="checkbox"></input>');
+					var label = $('<label>'+ val.name +'<label>');
+					$(label).appendTo(li);
+					inp.type="checkbox";
+					inp.value = val.id;
+					$(inp).appendTo(li);
+					$('#subcat').append(li);
+				});
 			}
 		});
-	}
+	});
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){
 		event.preventDefault();
