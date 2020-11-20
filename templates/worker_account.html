@@ -1,19 +1,63 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+{% endblock extra_css %}
 {% block content %}
-    <form method="post" action="{% url 'worker_account' %}">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        <select id="categories" data-url="{% url 'update_subcategories' %}">
-            {% for category in categories_job %}
-            <option value="{{ category.name }}">{{ category.name }}</option>
-            {% endfor %}
-        </select>
-        <label for="subcat">Subcat</label>
-        <ul id="subcat">
-
+<div id="account">
+    <input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+        <header>
+            My App
+        </header>
+        <ul>
+            <li><a href="#"><i class="fas fa-qrcode"></i>Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-link"></i>Shortcuts</a></li>
+            <li><a href="#" class="submenu-btn"><i class="fas fa-stream"></i>Overview<span class="fas fa-caret-down"></span></a>
+                <ul class="submenu" hidden>
+                    <li><a href="#">Inside1</a></li>
+                    <li><a href="#">Inside2</a></li>
+                </ul>
+            </li>
+            <li><a href="#" class="submenu-btn"><i class="fas fa-stream"></i>Superview<span class="fas fa-caret-down"></span></a>
+                <ul class="submenu" hidden>
+                    <li><a href="#">Inside1</a></li>
+                    <li><a href="#">Inside2</a></li>
+                </ul>
+            </li>
+            <li><a href="#"><i class="fas fa-calendar-week"></i>Events</a></li>
+            <li><a href="#"><i class="fas fa-question-circle"></i>About</a></li>
+            <li><a href="#"><i class="fas fa-sliders-h"></i>Services</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i>Contact</a></li>
         </ul>
-        {{ worker_form }}
-        <button type="submit">Ok</button>
-    </form>
+    </div>
+    <section id="account-main">
+        <div class="account-form">
+            <form method="post" action="{% url 'worker_account' %}">
+                {% csrf_token %}
+                {{ user_form.as_p }}
+                <select id="categories" data-url="{% url 'update_subcategories' %}">
+                    {% for category in categories_job %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="subcat">Subcat</label>
+                <ul id="subcat">
+
+                </ul>
+                {{ worker_form }}
+                <button type="submit">Ok</button>
+            </form>
+        </div>
+        <div class="ads">
+
+        </div>
+    </section>
+</div>
+
 {% endblock %}

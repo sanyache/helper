@@ -54,19 +54,23 @@ jQuery(document).on('ready', function() {
 			data: {'category': category},
 			success: function(data){
 				$.each(data, function(index, val){
-					console.log('data', val);
 					var li = $('<li></li>');
-					var inp = $('<input type="checkbox"></input>');
+					var inp = $('<input type="checkbox" name="subcategories"></input>');
 					var label = $('<label>'+ val.name +'<label>');
 					$(label).appendTo(li);
-					inp.type="checkbox";
-					inp.value = val.id;
+					inp.val(val.id);
 					$(inp).appendTo(li);
 					$('#subcat').append(li);
 				});
 			}
 		});
 	});
+	$('.submenu-btn').on('click', function(e){
+		e.preventDefault();
+		let subShow = e.currentTarget.nextElementSibling;
+		subShow.hidden = !subShow.hidden;
+		e.currentTarget.lastChild.classList.toggle('rotate');
+	})
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){
 		event.preventDefault();

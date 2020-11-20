@@ -27,23 +27,27 @@ class SignUp(CreateView):
 
 def worker_account(request):
 
-    worker_form = WorkerForm()
     categories_job = CategoryJob.objects.all()
     if request.method == "GET":
         user_form = UserForm(instance=request.user)
-        worker = Worker.objects.filter(user=request.user).first()
-        if worker:
-            worker_form = WorkerForm(instance=worker)
-        return render(request, 'worker_account.html',
+        worker, created = Worker.objects.get_or_create(user=request.user)
+        worker_form = WorkerForm(instance=worker)
+        return render(request, 'dashboard-profile.html',
                       {'user_form': user_form, 'worker_form': worker_form,
                        'categories_job': categories_job})
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
-        worker_form = WorkerForm(request.POST)
+        worker_form = WorkerForm(request.POST, request.FILES, instance=request.user.worker)
+
         if user_form.is_valid() and worker_form.is_valid():
-            user = user_form.save()
-            worker = worker_form.save(commit=False)
-            worker.user = user
-            worker.save()
-            worker_form.save_m2m()
-        return HttpResponseRedirect(reverse('home'))
+            print('user',user_form.cleaned_data)
+            print('worker',worker_form.cleaned_data.get('title_image'))
+            user_form.save()
+            # worker, created = Worker.objects.get_or_create(user=user, )
+            worker_form.save()
+            # worker.save()
+            # worker_form.save_m2m()
+        else:
+            print('u', user_form.cleaned_data)
+            print('w', worker_form.cleaned_data)
+        return HttpResponseRedirect(reverse('worker_account'))
