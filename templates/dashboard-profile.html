@@ -172,23 +172,19 @@
 													{% csrf_token %}
 													<fieldset>
 														<div class="form-group form-group-half">
-															<span class="wt-select">
-																<select>
-																	<option value="" disabled="">
-																		Область
+															<span class="select">
+																<select class="form-control" title="Місто">
+																	<option selected disabled class="text-hide">Місто</option>
+																	{% for region in regions %}
+																	<option value="{{ region.id }}">{{ region.name }}
 																	</option>
-																	<option value="1">Кіровоградська
-																	</option>
-																	<option value="2">Полтавська
-																	</option>
+																	{% endfor %}
 																</select>
 															</span>
 														</div>
 														<div class="form-group form-group-half">
-
 																  <span class="caret">Міста</span>
 																{{ worker_form.cities }}
-
 
 														</div>
 														<div class="form-group form-group-half">
@@ -230,6 +226,7 @@
 														<div class="form-group form-group-half">
 															<span class="wt-select">
                                                         		<select id="categories" data-url="{% url 'update_subcategories' %}">
+																	<option selected disabled class="text-hide">Категорії</option>
 																	{% for category in categories_job %}
 																	<option value="{{ category.name }}">{{ category.name }}</option>
 																	{% endfor %}
@@ -237,10 +234,11 @@
 															</span>
 														</div>
 														<div class="form-group form-group-half">
-															<label for="subcat">Subcat</label>
-																<ul id="subcat">
+															<label for="subcat"><h3>Підкатегорії</h3></label>
+																{{ worker_form.subcategories }}
+																<!-- <ul id="subcat" class="ulCheck">
 
-																</ul>
+																</ul> -->
 														</div>
 														<div class="form-group form-group-label">
 																<div class="wt-labelgroup">
@@ -319,37 +317,7 @@
 														</fieldset>
 													</form>
 												</div>
-											</div>
-											{% if user_form.errors %}
-												{% for field in user_form %}
-													{% for error in field.errors %}
-														<div class="alert alert-danger">
-															<strong>{{ error|escape }}</strong>
-														</div>
-													{% endfor %}
-												{% endfor %}
-												{% for error in user_form.non_field_errors %}
-													<div class="alert alert-danger">
-														<strong>{{ error|escape }}</strong>
-													</div>
-												{% endfor %}
-											{% endif %}
-											{% if form.errors %}
-    {% for field in worker_form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in worker_form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-
-
+											</div>											
 											<div class="wt-bannerphoto wt-tabsinfo">
 												<div class="wt-tabscontenttitle">
 													<h2>Banner Photo</h2>

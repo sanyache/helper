@@ -28,13 +28,15 @@ class SignUp(CreateView):
 def worker_account(request):
 
     categories_job = CategoryJob.objects.all()
+    regions = Region.objects.all()
     if request.method == "GET":
         user_form = UserForm(instance=request.user)
         worker, created = Worker.objects.get_or_create(user=request.user)
         worker_form = WorkerForm(instance=worker)
         return render(request, 'dashboard-profile.html',
                       {'user_form': user_form, 'worker_form': worker_form,
-                       'categories_job': categories_job})
+                       'categories_job': categories_job,
+                       'regions': regions})
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         worker_form = WorkerForm(request.POST, request.FILES, instance=request.user.worker)

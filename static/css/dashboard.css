@@ -2793,3 +2793,14 @@ a.wt-back:hover{color: #55acee;}
 	content: '\e875';
 }
 .wt-infouploading .wt-labelgroup > span{display: none !important;}
+.ulCheck li{
+	font-size: 22px;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.ulCheck li label{
+	margin: 5px 0;
+	padding-left: 10px;
+}
