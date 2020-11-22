@@ -46,52 +46,61 @@ jQuery(document).on('ready', function() {
 	// 	});
 	// }
 	var ulCategories = document.querySelectorAll('#id_subcategories  li');
+	var ulCities = document.querySelectorAll('#id_cities li');
 	function hideAllUl() {
-		console.log('ul', ulCategories);
 		ulCategories.forEach(el => el.hidden= true);
+		ulCities.forEach(el => el.hidden = true);
 	}
+	 
 	hideAllUl();
 	jQuery('#categories').on('change', function(){
 		var category = $(this).val();
 		var url = $(this).attr('data-url');
+		document.getElementById('id_subcategories').classList.add('ulCheck');
 		$.ajax({
 			url: url,
 			data: {'category': category},
 			success: function(data){
-				var arr = data.worker_sub.flat();
 				var arrIdCat = [];
 				data.val.forEach(el => arrIdCat.push(el.id));
-				console.log('val', arrIdCat, arr);
 				ulCategories.forEach(el => {
 					var inputId = parseInt(el.getElementsByTagName('input').subcategories.value);
 					if( arrIdCat.includes(inputId)){
 						el.hidden = false;
-						console.log('vis', el);
 					} else {
 						el.hidden = true;	
-						console.log('hid', el.getElementsByTagName('input').subcategories.value, arrIdCat);
 					}
 					
 				})
-				// $('#subcat').html('');
-				// $.each(data.val, function(index, val){
-				// 	var li = $('<li></li>');
-				// 	var inp = $('<input type="checkbox" name="subcategories"></input>');
-				// 	var label = $('<label>'+ val.name +'<label>');
-					
-				// 	inp.val(val.id);
-				// 	if(data.worker_sub){
-				// 		if(data.worker_sub.flat().includes(val.id)){
-				// 		    inp.prop('checked', true);			
-				// 		}
-				// 		console.log('data', data.worker_sub.flat());
-				// 	}
-				// 	$(inp).appendTo(li);
-				// 	$(label).appendTo(li);
-				// 	$('#subcat').append(li);
-				// });
 			}
 		});
+	});
+	jQuery('#regions').on('change', function(){
+		var region = $(this).val();
+		var url = $(this).attr('data-url');
+		document.getElementById('id_cities').classList.add('ulCheck');
+		$.ajax({
+			url: url,
+			data: {'region': region},
+			success: function(data){
+				var arrIdRegions = [];
+				data.val.forEach(el => arrIdRegions.push(el.id));
+				ulCities.forEach(el => {
+					console.log('id', el.getElementsByTagName('input').cities.value, arrIdRegions );
+					var inputId = parseInt(el.getElementsByTagName('input').cities.value);
+					if( arrIdRegions.includes(inputId)){
+						el.hidden = false;
+					} else {
+						el.hidden = true;	
+					}
+					
+				})
+			}
+		});
+	});
+	$('#id_title_image').on('change', function(){
+		console.log('file', this.files[0]);
+		document.getElementById('previewTitle').src = window.URL.createObjectURL(this.files[0]);
 	});
 	$('.submenu-btn').on('click', function(e){
 		e.preventDefault();

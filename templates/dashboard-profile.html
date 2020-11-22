@@ -173,8 +173,13 @@
 													<fieldset>
 														<div class="form-group form-group-half">
 															<span class="select">
-																<select class="form-control" title="Місто">
-																	<option selected disabled class="text-hide">Місто</option>
+																<select class="form-control" 
+																		title="Область"
+																		id="regions"
+																		data-url="{% url 'update_cities' %}">
+																	<option selected disabled class="text-hide">
+																		Область
+																	</option>
 																	{% for region in regions %}
 																	<option value="{{ region.id }}">{{ region.name }}
 																	</option>
@@ -183,7 +188,7 @@
 															</span>
 														</div>
 														<div class="form-group form-group-half">
-																  <span class="caret">Міста</span>
+																  <span class="caret"><h3>Міста</h3></span>
 																{{ worker_form.cities }}
 
 														</div>
@@ -224,8 +229,8 @@
 															</textarea>
 														</div>
 														<div class="form-group form-group-half">
-															<span class="wt-select">
-                                                        		<select id="categories" data-url="{% url 'update_subcategories' %}">
+															<span class="select">
+                                                        		<select id="categories" data-url="{% url 'update_subcategories' %}" class="form-control">
 																	<option selected disabled class="text-hide">Категорії</option>
 																	{% for category in categories_job %}
 																	<option value="{{ category.name }}">{{ category.name }}</option>
@@ -236,9 +241,6 @@
 														<div class="form-group form-group-half">
 															<label for="subcat"><h3>Підкатегорії</h3></label>
 																{{ worker_form.subcategories }}
-																<!-- <ul id="subcat" class="ulCheck">
-
-																</ul> -->
 														</div>
 														<div class="form-group form-group-label">
 																<div class="wt-labelgroup">
@@ -249,7 +251,11 @@
 																			   id="" value="">
 																	</label> -->
 																	{{ worker_form.title_image }}
+																	{% if user.worker.title_image %}
 																	<span><img src="{{ user.worker.title_image.url }}"></span>
+																	{% else %}
+																	<img id="previewTitle" width="50" height="50"/>
+																	{% endif %}
 																	<em class="wt-fileuploading">Uploading<i class="fa fa-spinner fa-spin"></i></em>
 																</div>
 															</div>

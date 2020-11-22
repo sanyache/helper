@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.views.generic import CreateView
@@ -53,3 +53,10 @@ def worker_account(request):
             print('u', user_form.cleaned_data)
             print('w', worker_form.cleaned_data)
         return HttpResponseRedirect(reverse('worker_account'))
+
+
+def update_cities(request):
+    region = request.GET.get('region', None)
+    cities = list(City.objects.filter(region__id=region).values('id'))
+    data = {'val': cities}
+    return JsonResponse(data)
