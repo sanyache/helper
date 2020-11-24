@@ -51,8 +51,17 @@ jQuery(document).on('ready', function() {
 		ulCategories.forEach(el => el.hidden= true);
 		ulCities.forEach(el => el.hidden = true);
 	}
-	 
+	function setStyle() {
+		document.getElementById('id_title_image').classList.add('wt-btn');
+	} 
 	hideAllUl();
+	// setStyle();
+	jQuery('#add_new_tag').on('click', function(){
+		var blank = document.querySelector('#tag_list').lastElementChild;
+		var clone = blank.cloneNode(true);
+		clone.hidden = false;
+		document.querySelector('#tag_list').prepend(clone);
+	});
 	jQuery('#categories').on('change', function(){
 		var category = $(this).val();
 		var url = $(this).attr('data-url');
@@ -99,7 +108,6 @@ jQuery(document).on('ready', function() {
 		});
 	});
 	$('#id_title_image').on('change', function(){
-		console.log('file', this.files[0]);
 		document.getElementById('previewTitle').src = window.URL.createObjectURL(this.files[0]);
 	});
 	$('.submenu-btn').on('click', function(e){

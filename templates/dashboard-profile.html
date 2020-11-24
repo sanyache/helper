@@ -155,8 +155,8 @@
 												   href="#wt-skills">Персональні дані
 												</a>
 											</li>
-											<li class="nav-item"><a data-toggle="tab" href="#wt-education">Experience &amp; Education</a></li>
-											<li class="nav-item"><a data-toggle="tab" href="#wt-awards">Projects &amp; Awards</a></li>
+											<li class="nav-item"><a data-toggle="tab" href="#wt-education">Теги діяльності</a></li>
+											<li class="nav-item"><a data-toggle="tab" href="#wt-awards">Додати телефони</a></li>
 										</ul>
 									</div>
 									<div class="wt-tabscontent tab-content">
@@ -223,10 +223,7 @@
 															<!--<input type="text" name="tagline" class="form-control" placeholder="Add Your Tagline Here">-->
 														<!--</div>-->
 														<div class="form-group">
-															<textarea class="form-control"
-																	  name="describe">
-																{{ worker_form.describe.value }}
-															</textarea>
+															<textarea class="form-control"  name="describe">{{ worker_form.describe.value }}</textarea>
 														</div>
 														<div class="form-group form-group-half">
 															<span class="select">
@@ -252,15 +249,15 @@
 																	</label> -->
 																	{{ worker_form.title_image }}
 																	{% if user.worker.title_image %}
-																	<span><img src="{{ user.worker.title_image.url }}"></span>
+																	<span class="titleImg"><img src="{{ user.worker.title_image.url }}"></span>
 																	{% else %}
-																	<img id="previewTitle" width="50" height="50"/>
+																	<span class="titleImg"><img id="previewTitle"/></span>
 																	{% endif %}
 																	<em class="wt-fileuploading">Uploading<i class="fa fa-spinner fa-spin"></i></em>
 																</div>
 															</div>
 													</fieldset>
-													<button type="submit" class="wt-btn">Ok</button>
+													<button type="submit" class="wt-btn submit">Ok</button>
 												</form>
 											</div>
 											<div class="wt-profilephoto wt-tabsinfo">
@@ -619,110 +616,37 @@
 										<div class="wt-educationholder tab-pane fade" id="wt-education">
 											<div class="wt-userexperience wt-tabsinfo">
 												<div class="wt-tabscontenttitle wt-addnew">
-													<h2>Add Your Experience</h2>
-													<a href="javascript:void(0);">Add New</a>
+													<h2>Додайте ключові напрямки вашої діяльності</h2>
+													<a href="javascript:void(0);" id="add_new_tag">Add New</a>
 												</div>
-												<ul class="wt-experienceaccordion accordion">
-													<li>
-														<div class="wt-accordioninnertitle">
-															<span id="accordioninnertitle" data-toggle="collapse" data-target="#innertitle">Web &amp; Apps Project Manager<em>(Jun 2017 - Jul 2018)</em></span>
-															<div class="wt-rightarea">
-																<a href="javascript:void(0);" class="wt-addinfo wt-skillsaddinfo" id="accordioninnertitle" data-toggle="collapse" data-target="#innertitle" aria-expanded="true"><i class="lnr lnr-pencil"></i></a>
-																<a href="javascript:void(0);" class="wt-deleteinfo"><i class="lnr lnr-trash"></i></a>
+												<form method="POST" action="{% url 'update_tags' %}">
+													{% csrf_token %}
+													<ul class="wt-experienceaccordion accordion" id="tag_list" name="">
+														{% for tag in tags %}
+														<li>
+															<div class="wt-accordioninnertitle">
+																<div class="form-group form-group-half">
+																	<input type="text" name="" class="form-control" value="{{ tag.name }}">
+																</div>
+																<div class="wt-rightarea">
+																	<a href="javascript:void(0);" class="wt-deleteinfo"><i class="lnr lnr-trash"></i></a>
+																</div>
 															</div>
-														</div>
-														<div class="wt-collapseexp collapse show" id="innertitle" aria-labelledby="accordioninnertitle" data-parent="#accordion">
-															<form class="wt-formtheme wt-userform">
-																<fieldset>
-																	<div class="form-group form-group-half">
-																		<input type="text" name="Company Title" class="form-control" placeholder="Company Title">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="text" name="Starting Date" class="form-control" placeholder="Starting Date">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="email" name="Ending Date" class="form-control" placeholder="Ending Date *">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="number" name="Job Title" class="form-control" placeholder="Your Job Title">
-																	</div>
-																	<div class="form-group">
-																		<textarea name="message" class="form-control" placeholder="Your Job Description"></textarea>
-																	</div>
-																	<div class="form-group">
-																		<span>* Leave ending date empty if its your current job</span>
-																	</div>
-																</fieldset>
-															</form>
-														</div>
-													</li>
-													<li>
-														<div class="wt-accordioninnertitle">
-															<span id="accordioninnertitlea" data-toggle="collapse" data-target="#innertitlea">Sr. PHP &amp; Laravel Developer<em>(Jun 2017 - Jul 2018)</em></span>
-															<div class="wt-rightarea">
-																<a href="javascript:void(0);" class="wt-addinfo wt-skillsaddinfo" id="accordioninnertitlea" data-toggle="collapse" data-target="#innertitlea" aria-expanded="true"><i class="lnr lnr-pencil"></i></a>
-																<a href="javascript:void(0);" class="wt-deleteinfo"><i class="lnr lnr-trash"></i></a>
+														</li>
+														{% endfor %}
+														<li  hidden>
+															<div class="wt-accordioninnertitle">
+																<div class="form-group form-group-half">
+																	<input type="text" name="tag-list" class="form-control" placeholder="Company Title">
+																</div>
+																<div class="wt-rightarea">
+																	<a href="javascript:void(0);" class="wt-deleteinfo"><i class="lnr lnr-trash"></i></a>
+																</div>
 															</div>
-														</div>
-														<div class="wt-collapseexp collapse hide" id="innertitlea" aria-labelledby="accordioninnertitleaa" data-parent="#accordion">
-															<form class="wt-formtheme wt-userform">
-																<fieldset>
-																	<div class="form-group form-group-half">
-																		<input type="text" name="Company Title" class="form-control" placeholder="Company Title">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="text" name="Starting Date" class="form-control" placeholder="Starting Date">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="email" name="Ending Date" class="form-control" placeholder="Ending Date *">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="number" name="Job Title" class="form-control" placeholder="Your Job Title">
-																	</div>
-																	<div class="form-group">
-																		<textarea name="message" class="form-control" placeholder="Your Job Description"></textarea>
-																	</div>
-																	<div class="form-group">
-																		<span>* Leave ending date empty if its your current job</span>
-																	</div>
-																</fieldset>
-															</form>
-														</div>
-													</li>
-													<li>
-														<div class="wt-accordioninnertitle">
-															<span id="accordioninnertitleb" data-toggle="collapse" data-target="#innertitleb">PHP &amp; Laravel Developer <em>(Apr 2016 - Jul 2017)</em></span>
-															<div class="wt-rightarea">
-																<a href="javascript:void(0);" class="wt-addinfo wt-skillsaddinfo" id="accordioninnertitleb" data-toggle="collapse" data-target="#innertitleb" aria-expanded="true"><i class="lnr lnr-pencil"></i></a>
-																<a href="javascript:void(0);" class="wt-deleteinfo"><i class="lnr lnr-trash"></i></a>
-															</div>
-														</div>
-														<div class="wt-collapseexp collapse hide" id="innertitleb" aria-labelledby="accordioninnertitleb" data-parent="#accordion">
-															<form class="wt-formtheme wt-userform">
-																<fieldset>
-																	<div class="form-group form-group-half">
-																		<input type="text" name="Company Title" class="form-control" placeholder="Company Title">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="text" name="Starting Date" class="form-control" placeholder="Starting Date">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="email" name="Ending Date" class="form-control" placeholder="Ending Date *">
-																	</div>
-																	<div class="form-group form-group-half">
-																		<input type="number" name="Job Title" class="form-control" placeholder="Your Job Title">
-																	</div>
-																	<div class="form-group">
-																		<textarea name="message" class="form-control" placeholder="Your Job Description"></textarea>
-																	</div>
-																	<div class="form-group">
-																		<span>* Leave ending date empty if its your current job</span>
-																	</div>
-																</fieldset>
-															</form>
-														</div>
-													</li>
-												</ul>
+														</li>
+													</ul>
+													<button type="submit" class="wt-btn submit">Ok</button>
+												</form>	
 											</div>
 											<div class="wt-userexperience">
 												<div class="wt-tabscontenttitle wt-addnew">

@@ -815,7 +815,7 @@ body{background:#f2f3fa;}
 .wt-uploadingholder .wt-designimg input[type=radio]+ label img,
 .wt-uploadingholder .wt-designimg input[type=radio]+ label{border-radius:0; }
 .wt-profilephotocontent .wt-formcategory .form-group:last-child{margin: 0;}
-.wt-tabcompanyinfo .wt-accordiondetails{
+.wt-tabcompanyinfo .wt-details{
 	border: 0;
 	padding: 20px;
 	padding-bottom: 0;
@@ -933,21 +933,27 @@ body{background:#f2f3fa;}
 .wt-experienceaccordion li:first-child .wt-accordioninnertitle{border-radius: 4px 4px 0 0;}
 .wt-experienceaccordion li:last-child .wt-accordioninnertitle{border-radius: 0 0 4px 4px;}
 .wt-accordioninnertitle{
-	float: left;
+	/* float: left; */
 	width: 100%;
 	background: #fff;
 	padding: 10px 30px;
 	line-height: inherit;
 	list-style-type: none;
 	border: 1px solid #ddd;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.wt-accordioninnertitle .form-group{
+	margin-top: 7px;
 }
 .wt-experienceaccordion li .wt-accordioninnertitle{border-bottom: 0;}
 .wt-experienceaccordion li:last-child .wt-accordioninnertitle{border-bottom: 1px solid #ddd;}
 .wt-accordioninnertitle .wt-rightarea a {
-    width: 30px;
+    width: 35px;
     float: left;
     color: #fff;
-    height: 30px;
+    height: 35px;
     font-size: 14px;
     line-height: 30px;
     border-radius: 4px;
@@ -2803,4 +2809,16 @@ a.wt-back:hover{color: #55acee;}
 .ulCheck li label{
 	margin: 5px 0;
 	padding-left: 10px;
+}
+.titleImg img{
+	width: 280px;
+	height: auto;
+	margin: 10px;
+}
+#id_title_image{
+	background: 00cc8d;
+	font-size:18px;
+}
+.submit{
+	margin: 10px 0;
 }

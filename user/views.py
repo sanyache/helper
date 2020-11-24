@@ -33,10 +33,15 @@ def worker_account(request):
         user_form = UserForm(instance=request.user)
         worker, created = Worker.objects.get_or_create(user=request.user)
         worker_form = WorkerForm(instance=worker)
+        try:
+            tags = request.user.worker.skilltags.all()
+        except:
+            tags = []
         return render(request, 'dashboard-profile.html',
                       {'user_form': user_form, 'worker_form': worker_form,
                        'categories_job': categories_job,
-                       'regions': regions})
+                       'regions': regions,
+                       'tags': tags})
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         worker_form = WorkerForm(request.POST, request.FILES, instance=request.user.worker)
@@ -60,3 +65,18 @@ def update_cities(request):
     cities = list(City.objects.filter(region__id=region).values('id'))
     data = {'val': cities}
     return JsonResponse(data)
+
+
+def update_tags(request):
+
+    if request.method == 'POST':
+        tags = request.POST.getlist('tag-list')
+        if tags:
+            for item in tags:
+                tag, created = SkillTag.objects.get_or_create(name=item)
+                print('tag', tag)
+                if created:
+                    tag.workers.add(request.user.worker)
+    return HttpResponseRedirect(reverse('worker_account'))
+
+

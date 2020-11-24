@@ -20,3 +20,9 @@ class CityAdmin(admin.ModelAdmin):
 class WorkerAdmin(admin.ModelAdmin):
 
     list_display = ('user',)
+
+
+@admin.register(SkillTag)
+class SkillTagAdmin(admin.ModelAdmin):
+
+    list_display = ('name', )
