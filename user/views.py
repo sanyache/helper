@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from job.models import CategoryJob
@@ -73,10 +73,17 @@ def update_tags(request):
         tags = request.POST.getlist('tag-list')
         if tags:
             for item in tags:
-                tag, created = SkillTag.objects.get_or_create(name=item)
-                print('tag', tag)
-                if created:
+                if item:
+                    tag, created = SkillTag.objects.get_or_create(name=item)
                     tag.workers.add(request.user.worker)
     return HttpResponseRedirect(reverse('worker_account'))
+
+
+class DeleteTag(DeleteView):
+    model = SkillTag
+    success_url = reverse_lazy('worker_account')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
 

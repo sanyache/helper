@@ -115,7 +115,16 @@ jQuery(document).on('ready', function() {
 		let subShow = e.currentTarget.nextElementSibling;
 		subShow.hidden = !subShow.hidden;
 		e.currentTarget.lastChild.classList.toggle('rotate');
-	})
+	});
+	$(document).on('click', '.wt-deleteinfo', function() {
+		var li = $(this).closest('li');
+		li.remove();
+		if (li.attr('data-url')){
+			$.ajax({
+				url: li.attr('data-url'),
+			});
+		}
+	});
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){
 		event.preventDefault();

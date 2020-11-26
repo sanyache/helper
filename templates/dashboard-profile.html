@@ -196,25 +196,29 @@
 															<input type="text" name="username"
 																   class="form-control"
 																   value="{{ user.username }}"
-																   placeholder="Логін">
+																   placeholder="Логін"
+																   required>
 														</div>
 														<div class="form-group form-group-half">
 															<input type="email" name="email"
 																   class="form-control"
 																   value="{{ user.email }}"
-																   placeholder="Email">
+																   placeholder="Email"
+																   required>
 														</div>
 														<div class="form-group form-group-half">
 															<input type="text" name="first_name"
 																   class="form-control"
 																   value="{{ user.first_name }}"
-																   placeholder="Ім'я">
+																   placeholder="Ім'я"
+																   required>
 														</div>
 														<div class="form-group form-group-half">
 															<input type="text" name="last_name"
 																   class="form-control"
 																   value="{{ user.last_name }}"
-																   placeholder="Прізвище">
+																   placeholder="Прізвище"
+																   required>
 														</div>
 														<!--<div class="form-group form-group-half">-->
 															<!--<input type="number" name="rate" class="form-control" placeholder="Your Service Hourly Rate ($)">-->
@@ -623,7 +627,7 @@
 													{% csrf_token %}
 													<ul class="wt-experienceaccordion accordion" id="tag_list" name="">
 														{% for tag in tags %}
-														<li>
+														<li data-url="{% url 'delete_tag' tag.id %}">
 															<div class="wt-accordioninnertitle">
 																<div class="form-group form-group-half">
 																	<input type="text" name="" class="form-control" value="{{ tag.name }}">
