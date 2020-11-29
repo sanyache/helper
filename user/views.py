@@ -34,14 +34,16 @@ def worker_account(request):
         worker, created = Worker.objects.get_or_create(user=request.user)
         worker_form = WorkerForm(instance=worker)
         try:
-            tags = request.user.worker.skilltags.all()
+            tags = worker.skilltags.all()
         except:
             tags = []
+        phones = Phone.objects.filter(worker=worker)
         return render(request, 'dashboard-profile.html',
-                      {'user_form': user_form, 'worker_form': worker_form,
+                      {'user_form': user_form, 'worker_form': worker_form, 'worker': worker,
                        'categories_job': categories_job,
                        'regions': regions,
-                       'tags': tags})
+                       'tags': tags,
+                       'phones': phones})
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         worker_form = WorkerForm(request.POST, request.FILES, instance=request.user.worker)
@@ -52,11 +54,15 @@ def worker_account(request):
             user_form.save()
             # worker, created = Worker.objects.get_or_create(user=user, )
             worker_form.save()
+            messages.info(request, 'Дані оновлено успішно')
             # worker.save()
             # worker_form.save_m2m()
         else:
             print('u', user_form.cleaned_data)
             print('w', worker_form.cleaned_data)
+            messages.error(request,
+                           'При оновленні даних відбулася помилка. Перевірте чи заповненні всі поля'
+                           )
         return HttpResponseRedirect(reverse('worker_account'))
 
 
@@ -70,12 +76,25 @@ def update_cities(request):
 def update_tags(request):
 
     if request.method == 'POST':
+        worker = request.user.worker
         tags = request.POST.getlist('tag-list')
         if tags:
             for item in tags:
                 if item:
                     tag, created = SkillTag.objects.get_or_create(name=item)
-                    tag.workers.add(request.user.worker)
+                    tag.workers.add(worker)
+    return HttpResponseRedirect(reverse('worker_account'))
+
+
+def update_phones(request):
+
+    if request.method == 'POST':
+        worker = request.user.worker
+        phones = request.POST.getlist('phone-list')
+        if phones:
+            for phone in phones:
+                if phone:
+                    Phone.objects.create(worker=worker, number=phone)
     return HttpResponseRedirect(reverse('worker_account'))
 
 
@@ -86,4 +105,11 @@ class DeleteTag(DeleteView):
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 
+
+class DeletePhone(DeleteView):
+    model = Phone
+    success_url = reverse_lazy('worker_account')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 

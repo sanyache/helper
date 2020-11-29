@@ -62,6 +62,12 @@ jQuery(document).on('ready', function() {
 		clone.hidden = false;
 		document.querySelector('#tag_list').prepend(clone);
 	});
+	jQuery('#add_new_phone').on('click', function(){
+		var blank = document.querySelector('#phone_list').lastElementChild;
+		var clone = blank.cloneNode(true);
+		clone.hidden = false;
+		document.querySelector('#phone_list').prepend(clone);
+	});
 	jQuery('#categories').on('change', function(){
 		var category = $(this).val();
 		var url = $(this).attr('data-url');
@@ -116,7 +122,16 @@ jQuery(document).on('ready', function() {
 		subShow.hidden = !subShow.hidden;
 		e.currentTarget.lastChild.classList.toggle('rotate');
 	});
-	$(document).on('click', '.wt-deleteinfo', function() {
+	$(document).on('click', '.deletetag', function() {
+		var li = $(this).closest('li');
+		li.remove();
+		if (li.attr('data-url')){
+			$.ajax({
+				url: li.attr('data-url'),
+			});
+		}
+	});
+	$(document).on('click', '.deletephone', function() {
 		var li = $(this).closest('li');
 		li.remove();
 		if (li.attr('data-url')){
