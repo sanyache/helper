@@ -157,6 +157,7 @@
 											</li>
 											<li class="nav-item"><a data-toggle="tab" href="#wt-education">Теги діяльності</a></li>
 											<li class="nav-item"><a data-toggle="tab" href="#wt-awards">Додати телефони</a></li>
+											<li class="nav-item"><a data-toggle="tab" href="#wt-portfolio">Створити портфоліо</a></li>
 										</ul>
 									</div>
 									<div class="wt-tabscontent tab-content">
@@ -219,13 +220,7 @@
 																   value="{{ user.last_name }}"
 																   placeholder="Прізвище"
 																   required>
-														</div>
-														<!--<div class="form-group form-group-half">-->
-															<!--<input type="number" name="rate" class="form-control" placeholder="Your Service Hourly Rate ($)">-->
-														<!--</div>-->
-														<!--<div class="form-group">-->
-															<!--<input type="text" name="tagline" class="form-control" placeholder="Add Your Tagline Here">-->
-														<!--</div>-->
+														</div>														
 														<div class="form-group">
 															<textarea class="form-control"  name="describe">{{ worker_form.describe.value }}</textarea>
 														</div>
@@ -244,13 +239,7 @@
 																{{ worker_form.subcategories }}
 														</div>
 														<div class="form-group form-group-label">
-																<div class="wt-labelgroup">
-																	<!-- <label for="filep">
-																		<span class="wt-btn">Select Files</span>
-																		<input type="file"
-																			   name="title_image"
-																			   id="" value="">
-																	</label> -->
+																<div class="wt-labelgroup">																	
 																	{{ worker_form.title_image }}
 																	{% if worker.title_image %}
 																	<span class="titleImg"><img src="{{ worker.title_image.url }}"></span>
@@ -263,109 +252,7 @@
 													</fieldset>
 													<button type="submit" class="wt-btn submit">Ok</button>
 												</form>
-											</div>
-											<div class="wt-profilephoto wt-tabsinfo">
-												<div class="wt-tabscontenttitle">
-													<h2>Profile Photo</h2>
-												</div>
-												<div class="wt-profilephotocontent">
-													<div class="wt-description">
-														<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua aut enim ad minim veniamac quis nostrud exercitation ullamco laboris.</p>
-													</div>
-													<form class="wt-formtheme wt-formprojectinfo wt-formcategory">
-														<fieldset>
-															<div class="form-group form-group-label">
-																<div class="wt-labelgroup">
-																	<label for="filep">
-																		<span class="wt-btn">Select Files</span>
-																		<input type="file" name="file" id="filep">
-																	</label>
-																	<span>Drop files here to upload</span>
-																	<em class="wt-fileuploading">Uploading<i class="fa fa-spinner fa-spin"></i></em>
-																</div>
-															</div>
-															<div class="form-group">
-																<ul class="wt-attachfile wt-attachfilevtwo">
-																	<li class="wt-uploadingholder wt-companyimg-uploading">
-																		<div class="wt-uploadingbox">
-																			<figure><img src="images/company/img-07.jpg" alt="img description"></figure>
-																			<div class="wt-uploadingbar wt-uploading">
-																				<span class="uploadprogressbar"></span>
-																				<span>Profile Photo.jpg</span>
-																				<em>File size: 300 kb<a href="javascript:void(0);" class="lnr lnr-cross"></a></em>
-																			</div>
-																		</div>
-																	</li>
-																	<li class="wt-uploadingholder wt-companyimg-user">
-																		<div class="wt-uploadingbox">
-																			<figure><img src="images/company/img-08.jpg" alt="img description"></figure>
-																			<div class="wt-uploadingbar wt-uploading">
-																				<span class="uploadprogressbar"></span>
-																				<span>Profile Photo.jpg</span>
-																				<em>File size: 300 kb<a href="javascript:void(0);" class="lnr lnr-cross"></a></em>
-																			</div>	
-																		</div>
-																	</li>
-																	<li class="wt-uploadingholder">
-																		<div class="wt-uploadingbox">
-																			<div class="wt-designimg">
-																				<input id="demoz" type="radio" name="employees" value="company" checked="">
-																				<label for="demoz"><img src="images/company/img-09.jpg" alt="img description"><i class="fa fa-check"></i></label>
-																			</div>
-																			<div class="wt-uploadingbar wt-uploading">
-																				<span class="uploadprogressbar"></span>
-																				<span>Profile Photo.jpg</span>
-																				<em>File size: 300 kb<a href="javascript:void(0);" class="lnr lnr-cross"></a></em>
-																			</div>
-																		</div>
-																	</li>
-																</ul>
-															</div>
-														</fieldset>
-													</form>
-												</div>
-											</div>											
-											<div class="wt-bannerphoto wt-tabsinfo">
-												<div class="wt-tabscontenttitle">
-													<h2>Banner Photo</h2>
-												</div>
-												<div class="wt-profilephotocontent">
-													<div class="wt-description">
-														<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua aut enim ad minim veniamac quis nostrud exercitation ullamco laboris.</p>
-													</div>
-													<form class="wt-formtheme wt-formprojectinfo wt-formcategory">
-														<fieldset>
-															<div class="form-group form-group-label">
-																<div class="wt-labelgroup">
-																	<label for="filew">
-																		<span class="wt-btn">Select Files</span>
-																		<input type="file" name="file" id="filew">
-																	</label>
-																	<span>Drop files here to upload</span>
-																	<em class="wt-fileuploading">Uploading<i class="fa fa-spinner fa-spin"></i></em>
-																</div>
-															</div>
-															<div class="form-group">
-																<ul class="wt-attachfile wt-attachfilevtwo">
-																	<li class="wt-uploadingholder">
-																		<div class="wt-uploadingbox">
-																			<div class="wt-designimg">
-																				<input id="demoq" type="radio" name="employees" value="company" checked="">
-																				<label for="demoq"><img src="images/company/img-10.jpg" alt="img description"><i class="fa fa-check"></i></label>
-																			</div>
-																			<div class="wt-uploadingbar">
-																				<span class="uploadprogressbar"></span>
-																				<span>Banner Photo.jpg</span>
-																				<em>File size: 300 kb<a href="javascript:void(0);" class="lnr lnr-cross"></a></em>
-																			</div>
-																		</div>
-																	</li>
-																</ul>
-															</div>
-														</fieldset>
-													</form>
-												</div>
-											</div>																									
+											</div>																																																									
 										</div>
 										<div class="wt-educationholder tab-pane fade" id="wt-education">
 											<div class="wt-userexperience wt-tabsinfo">
@@ -439,41 +326,64 @@
 												</form>
 											</div>																		
 										</div>
-									</div>
-								</div>
-							</div>
-							<div class="wt-updatall">
-								<i class="ti-announcement"></i>
-								<span>Update all the latest changes made by you, by just clicking on “Save &amp; Continue” button.</span>
-								<a class="wt-btn" href="javascript:void(0);">Save &amp; Update</a>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-							<div class="wt-haslayout wt-dbsectionspace wt-codescansidebar">
-								<div class="tg-authorcodescan wt-codescanholder">
-									<figure class="tg-qrcodeimg">
-										<img src="images/qrcode.png" alt="img description">
-									</figure>
-									<div class="tg-qrcodedetail">
-										<span class="lnr lnr-laptop-phone"></span>
-										<div class="tg-qrcodefeat">
-											<h3>Scan with your <span>Smart Phone </span> To Get It Handy.</h3>
+										<div class="wt-awardsholder tab-pane fade" id="wt-portfolio">
+											<div class="wt-addprojectsholder wt-tabsinfo">
+												<div class="wt-tabscontenttitle wt-addnew">
+													<h2>Створіть ваше портфоліо</h2>
+													<p>Додайте не більше 9 фото</p>
+													<a href="javascript:void(0);" id="add_new_photo">Додати фото</a>
+												</div>
+												<form method="POST" action="{% url 'update_photos' %}" enctype="multipart/form-data">
+													{% csrf_token %}				
+													<div class="form-group">
+														<ul class="wt-attachfile wt-attachfilevtwo" id="photo_list">
+															{% for photo in photos %}
+															<li data-url="{% url 'delete_photo' photo.id %}">
+																<img src="{{ photo.image.url }}">
+																<span><a href="javascript:void(0);" class="deletePhoto">X</a></span>
+															</li>
+															{% endfor %}
+															<li hidden>																
+																<input type="file" name="portfolio" class="portfolio">
+																<span class="titleImg"><img/></span>																	
+																<a href="javascript:void(0);" class="deletePhoto">X</a>																																
+															</li>															
+														</ul>																	
+													<button type="submit" class="wt-btn submit">Ok</button>
+												</form>
+											</div>																		
 										</div>
 									</div>
-									<div class="wt-codescanicons">
-										<span>Share Your Profile</span>
-										<ul class="wt-socialiconssimple">
-											<li class="wt-facebook"><a href="javascript:void(0);"><i class="fa fa-facebook-f"></i></a></li>
-											<li class="wt-twitter"><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
-											<li class="wt-linkedin"><a href="javascript:void(0);"><i class="fab fa-linkedin-in"></i></a></li>
-											<li class="wt-clone"><a href="javascript:void(0);"><i class="far fa-clone"></i></a></li>
-										</ul>
+								</div>
+							</div>							
+						</div>
+						
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+						<div class="wt-haslayout wt-dbsectionspace wt-codescansidebar">
+							<div class="tg-authorcodescan wt-codescanholder">
+								<figure class="tg-qrcodeimg">
+									<img src="images/qrcode.png" alt="img description">
+								</figure>
+								<div class="tg-qrcodedetail">
+									<span class="lnr lnr-laptop-phone"></span>
+									<div class="tg-qrcodefeat">
+										<h3>Scan with your <span>Smart Phone </span> To Get It Handy.</h3>
 									</div>
 								</div>
-								<div class="wt-companyad">
-									<figure class="wt-companyadimg"><img src="images/add-img.jpg" alt="img description"></figure>
-									<span>Advertisement  255px X 255px</span>
+								<div class="wt-codescanicons">
+									<span>Share Your Profile</span>
+									<ul class="wt-socialiconssimple">
+										<li class="wt-facebook"><a href="javascript:void(0);"><i class="fa fa-facebook-f"></i></a></li>
+										<li class="wt-twitter"><a href="javascript:void(0);"><i class="fab fa-twitter"></i></a></li>
+										<li class="wt-linkedin"><a href="javascript:void(0);"><i class="fab fa-linkedin-in"></i></a></li>
+										<li class="wt-clone"><a href="javascript:void(0);"><i class="far fa-clone"></i></a></li>
+									</ul>
 								</div>
+							</div>
+							<div class="wt-companyad">
+								<figure class="wt-companyadimg"><img src="images/add-img.jpg" alt="img description"></figure>
+								<span>Advertisement  255px X 255px</span>
 							</div>
 						</div>
 					</div>

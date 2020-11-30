@@ -26,3 +26,9 @@ class WorkerAdmin(admin.ModelAdmin):
 class SkillTagAdmin(admin.ModelAdmin):
 
     list_display = ('name', )
+
+
+@admin.register(WorkerGallery)
+class WorkGalleryAdmin(admin.ModelAdmin):
+
+    list_display = ('worker', )

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
+from django.core.files.storage import FileSystemStorage
 from django.views.generic import CreateView, DeleteView
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
@@ -38,12 +39,14 @@ def worker_account(request):
         except:
             tags = []
         phones = Phone.objects.filter(worker=worker)
+        photos = WorkerGallery.objects.filter(worker=worker)
         return render(request, 'dashboard-profile.html',
                       {'user_form': user_form, 'worker_form': worker_form, 'worker': worker,
                        'categories_job': categories_job,
                        'regions': regions,
                        'tags': tags,
-                       'phones': phones})
+                       'phones': phones,
+                       'photos': photos})
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         worker_form = WorkerForm(request.POST, request.FILES, instance=request.user.worker)
@@ -98,6 +101,21 @@ def update_phones(request):
     return HttpResponseRedirect(reverse('worker_account'))
 
 
+def update_photos(request):
+
+    if request.method == 'POST':
+        worker = request.user.worker
+        photos = request.FILES.getlist('portfolio')
+        print('img', photos, 'post', request.POST)
+        if photos:
+            for photo in photos:
+                fs = FileSystemStorage()
+                file_path = fs.save(photo.name, photo)
+                img = WorkerGallery(worker=worker, image=file_path)
+                img.save()
+    return HttpResponseRedirect(reverse('worker_account'))
+
+
 class DeleteTag(DeleteView):
     model = SkillTag
     success_url = reverse_lazy('worker_account')
@@ -112,4 +130,13 @@ class DeletePhone(DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
+
+
+class DeletePhoto(DeleteView):
+    model = WorkerGallery
+    success_url = reverse_lazy('worker_account')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
 

@@ -56,6 +56,7 @@ jQuery(document).on('ready', function() {
 	} 
 	hideAllUl();
 	// setStyle();
+	// Clone block ===============================
 	jQuery('#add_new_tag').on('click', function(){
 		var blank = document.querySelector('#tag_list').lastElementChild;
 		var clone = blank.cloneNode(true);
@@ -68,6 +69,17 @@ jQuery(document).on('ready', function() {
 		clone.hidden = false;
 		document.querySelector('#phone_list').prepend(clone);
 	});
+	jQuery('#add_new_photo').on('click', function(){
+		var list = document.querySelector('#photo_list')
+		var blank = list.lastElementChild;
+		var clone = blank.cloneNode(true);
+		clone.hidden = false;
+		list.prepend(clone);
+		if(list.childElementCount == 10) {
+			document.getElementById('add_new_photo').hidden = true;
+		}
+	})
+	// Dynamic category ==========================
 	jQuery('#categories').on('change', function(){
 		var category = $(this).val();
 		var url = $(this).attr('data-url');
@@ -101,7 +113,6 @@ jQuery(document).on('ready', function() {
 				var arrIdRegions = [];
 				data.val.forEach(el => arrIdRegions.push(el.id));
 				ulCities.forEach(el => {
-					console.log('id', el.getElementsByTagName('input').cities.value, arrIdRegions );
 					var inputId = parseInt(el.getElementsByTagName('input').cities.value);
 					if( arrIdRegions.includes(inputId)){
 						el.hidden = false;
@@ -113,8 +124,14 @@ jQuery(document).on('ready', function() {
 			}
 		});
 	});
+	// Preview photo ============================
 	$('#id_title_image').on('change', function(){
 		document.getElementById('previewTitle').src = window.URL.createObjectURL(this.files[0]);
+	});
+	
+	$(document).on('change', '.portfolio', function(e){
+		var spanImg = e.currentTarget.nextElementSibling;
+		spanImg.firstChild.src = window.URL.createObjectURL(this.files[0]);
 	});
 	$('.submenu-btn').on('click', function(e){
 		e.preventDefault();
@@ -122,6 +139,7 @@ jQuery(document).on('ready', function() {
 		subShow.hidden = !subShow.hidden;
 		e.currentTarget.lastChild.classList.toggle('rotate');
 	});
+	// Delete block ==================================
 	$(document).on('click', '.deletetag', function() {
 		var li = $(this).closest('li');
 		li.remove();
@@ -140,6 +158,19 @@ jQuery(document).on('ready', function() {
 			});
 		}
 	});
+	$(document).on('click', '.deletePhoto', function(){
+		var li = $(this).closest('li');
+		li.remove();
+		if (li.attr('data-url')){
+			$.ajax({
+				url: li.attr('data-url'),
+			});
+		}
+		var list = document.getElementById('add_new_photo');
+		if(list.hidden) {
+			list.hidden = false;
+		}
+	})
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){
 		event.preventDefault();
