@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from job.models import SubCategoryJob
+from imagekit.models import ImageSpecField
+from imagekit.processors import Transpose, SmartResize
 
 # Create your models here.
 
@@ -43,6 +45,10 @@ class Worker(models.Model):
                                            related_name='workers')
     title_image = models.ImageField(upload_to='worker/', blank=True, null=True,
                                     verbose_name='фото користувача')
+    image_small_avatar = ImageSpecField(source='title_image',
+                                  processors=[Transpose(), SmartResize(100, 100)],
+                                  format='JPEG',
+                                  options={'quality': 50})
     describe = models.TextField()
     created = models.DateField(auto_now_add=True, verbose_name='створено')
     is_active = models.BooleanField(default=True)

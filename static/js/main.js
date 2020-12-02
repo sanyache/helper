@@ -124,6 +124,21 @@ jQuery(document).on('ready', function() {
 			}
 		});
 	});
+	jQuery('#worker_list_regions').on('change', function(){
+		var region = $(this).val();
+		var url = $(this).attr('data-url');
+		$.ajax({
+			url: url,
+			data: {'region': region},
+			success: function(data) {
+				$("#cities_list").html(data.html);
+				var _wt_verticalscrollbar = jQuery('.wt-verticalscrollbar');
+				_wt_verticalscrollbar.mCustomScrollbar({
+					axis:"y",
+				});
+			}
+		});
+	});
 	// Preview photo ============================
 	$('#id_title_image').on('change', function(){
 		document.getElementById('previewTitle').src = window.URL.createObjectURL(this.files[0]);

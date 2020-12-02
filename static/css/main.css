@@ -1002,6 +1002,17 @@ li.wt-rss a { background:#ff6600; }
 	display: block;
 	position: relative;
 }
+.ulCheck li{
+	font-size: 22px;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.ulCheck li label{
+	margin: 5px 0;
+	padding-left: 10px;
+}
 .sub-menu,
 .mega-menu{
 	left: 0;

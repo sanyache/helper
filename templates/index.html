@@ -100,8 +100,9 @@
 										</div>
 										<div class="wt-categoryslidup">
 											{% for subcategory in category.subcategories.all %}
-											<a href="javascript:void(0);">{{ subcategory }} <i
-													class="fa fa-arrow-right"></i></a><br/>
+											<a href="{% url 'worker_by_subcategory' subcategory.id  %}">
+												{{ subcategory }}
+												 <i	class="fa fa-arrow-right"></i></a><br/>
 											{% endfor %}
 										</div>
 

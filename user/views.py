@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy, reverse
+from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
-from django.views.generic import CreateView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, DetailView
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from job.models import CategoryJob
@@ -70,9 +71,11 @@ def worker_account(request):
 
 
 def update_cities(request):
+    data = dict()
     region = request.GET.get('region', None)
-    cities = list(City.objects.filter(region__id=region).values('id'))
-    data = {'val': cities}
+    cities = list(City.objects.filter(region__id=region).values('id', 'name'))
+    data['val'] = cities
+    data['html'] = render_to_string('includes/cities_list.html', {'cities': cities})
     return JsonResponse(data)
 
 
@@ -106,13 +109,15 @@ def update_photos(request):
     if request.method == 'POST':
         worker = request.user.worker
         photos = request.FILES.getlist('portfolio')
-        print('img', photos, 'post', request.POST)
         if photos:
             for photo in photos:
-                fs = FileSystemStorage()
-                file_path = fs.save(photo.name, photo)
-                img = WorkerGallery(worker=worker, image=file_path)
-                img.save()
+                if photo.size <= 2*1024*1024:
+                    fs = FileSystemStorage()
+                    file_path = fs.save(photo.name, photo)
+                    img = WorkerGallery(worker=worker, image=file_path)
+                    img.save()
+                else:
+                    messages.error(request, '{} розмір перевищує допустимий'.format(photo))
     return HttpResponseRedirect(reverse('worker_account'))
 
 
@@ -140,3 +145,27 @@ class DeletePhoto(DeleteView):
         return self.post(request, *args, **kwargs)
 
 
+class WorkerList(ListView):
+
+    model = Worker
+    queryset = Worker.objects.filter(is_active=True)
+    context_object_name = 'workers'
+    template_name = 'userlisting.html'
+
+
+class WorkerListBySubCategory(ListView):
+
+    model = Worker
+    queryset = Worker.objects.filter(is_active=True)
+    context_object_name = 'workers'
+    template_name = 'userlisting.html'
+
+    def get_queryset(self):
+        queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerListBySubCategory, self).get_context_data(object_list=None, **kwargs)
+        regions = Region.objects.all()
+        context['regions'] = regions
+        return context

@@ -1,0 +1,8 @@
+<div class="wt-checkboxholder wt-verticalscrollbar" >
+    {% for city in cities %}
+    <span class="wt-checkbox">
+        <input id="{{ city.id }}" type="checkbox" name="city" value="{{ city.id }}">
+        <label for="{{ city.id }}">{{ city.name }}</label>
+    </span>
+    {% endfor %}
+</div>
