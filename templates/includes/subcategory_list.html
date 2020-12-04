@@ -6,7 +6,8 @@
                name="subcategory" 
                value="{{ subcategory.id }}" 
                class="subcategory"
-               data-url="{% url 'ajax-filter-workers' %}">
+               data-url="{% url 'ajax-filter-workers' %}"
+        >
         <label for="{{ subcategory.id }}">{{ subcategory.name }}</label>
     </span>
     {% endfor %}

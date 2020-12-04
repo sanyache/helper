@@ -153,6 +153,14 @@ class WorkerList(ListView):
     context_object_name = 'workers'
     template_name = 'userlisting.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerList, self).get_context_data(object_list=None, **kwargs)
+        regions = Region.objects.all()
+        categories = CategoryJob.objects.all()
+        context['regions'] = regions
+        context['categories'] = categories
+        return context
+
 
 class WorkerListBySubCategory(ListView):
 
@@ -172,6 +180,7 @@ class WorkerListBySubCategory(ListView):
         categories = CategoryJob.objects.all()
         context['regions'] = regions
         context['categories'] = categories
+        context['pk'] = self.kwargs['pk']
         return context
 
 
@@ -187,6 +196,7 @@ def ajax_filter_workers(request):
         filters['cities__id__in'] = cities
     if subcategories:
         subcategories = [int(id) for id in subcategories]
+        print('sub', subcategories)
         filters['subcategories__id__in'] = subcategories
     if filters:
         queryset = queryset.filter(**filters).distinct()

@@ -124,7 +124,7 @@
 															<div class="form-group">
 																<select class="form-control" 
 																		title="Категорія"
-																		id="categories_list"
+																		id="categories_list"																		
 																		data-url="{% url 'update_subcategories' %}">
 																	<option selected disabled class="text-hide">Категорія</option>
 																	{% for category in categories %}
@@ -133,7 +133,13 @@
 																</select>
 															</div>
 														</fieldset>
-														<fieldset id="subcategories_list">
+														<fieldset id="subcategories_list"
+																  {% if pk %}
+																  data-pk="{{ pk }}"
+																  {% else %}
+																  data-pk=""
+																  {% endif %}
+														>
 															
 														</fieldset>
 													</form>

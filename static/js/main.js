@@ -161,6 +161,7 @@ jQuery(document).on('ready', function() {
 		var subcategory_list = []
 		var city = e.currentTarget.firstElementChild;
 		var url = $(city).attr('data-url');
+		var pk = $(document.getElementById('subcategories_list')).attr('data-pk');
 		city.checked = !city.checked;
 		cities.forEach(el => {			
 			if( el.checked ) {
@@ -172,8 +173,12 @@ jQuery(document).on('ready', function() {
 				subcategory_list.push(el.value);
 			}
 		});
+		if(subcategory_list.length == 0 && pk) {
+			subcategory_list.push(pk);
+		}
 		$.ajax({
 			url: url,
+			method: 'GET',
 			data: { 'cities': city_list, 'subcategories': subcategory_list },
 			success: function(data) {
 				$('#workers').html(data.html);
