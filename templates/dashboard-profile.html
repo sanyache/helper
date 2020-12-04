@@ -229,7 +229,7 @@
                                                         		<select id="categories" data-url="{% url 'update_subcategories' %}" class="form-control">
 																	<option selected disabled class="text-hide">Категорії</option>
 																	{% for category in categories_job %}
-																	<option value="{{ category.name }}">{{ category.name }}</option>
+																	<option value="{{ category.id }}">{{ category.name }}</option>
 																	{% endfor %}
 																</select>
 															</span>

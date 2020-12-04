@@ -14,5 +14,6 @@ urlpatterns = [
     path('ajax/update_cities', update_cities, name='update_cities'),
     path('worker_list', WorkerList.as_view(), name='worker_list'),
     path('worker_by_subcategory/<int:pk>', WorkerListBySubCategory.as_view(),
-         name='worker_by_subcategory')
+         name='worker_by_subcategory'),
+    path('ajax/filter_workers', ajax_filter_workers, name='ajax-filter-workers')
 ]

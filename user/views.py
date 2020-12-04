@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
+from django.db.models import Q
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from job.models import CategoryJob
@@ -148,7 +149,7 @@ class DeletePhoto(DeleteView):
 class WorkerList(ListView):
 
     model = Worker
-    queryset = Worker.objects.filter(is_active=True)
+    queryset = Worker.objects.filter(is_active=True).prefetch_related('skilltags')
     context_object_name = 'workers'
     template_name = 'userlisting.html'
 
@@ -161,11 +162,33 @@ class WorkerListBySubCategory(ListView):
     template_name = 'userlisting.html'
 
     def get_queryset(self):
-        queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])
+        queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])\
+                                        .prefetch_related('skilltags').select_related('user')
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(WorkerListBySubCategory, self).get_context_data(object_list=None, **kwargs)
         regions = Region.objects.all()
+        categories = CategoryJob.objects.all()
         context['regions'] = regions
+        context['categories'] = categories
         return context
+
+
+def ajax_filter_workers(request):
+    data = dict()
+    filters = dict()
+    queryset = Worker.objects.filter(is_active=True).prefetch_related(
+        'skilltags').select_related('user')
+    cities = request.GET.getlist('cities[]')
+    subcategories = request.GET.getlist('subcategories[]')
+    if cities:
+        cities = [int(id) for id in cities]
+        filters['cities__id__in'] = cities
+    if subcategories:
+        subcategories = [int(id) for id in subcategories]
+        filters['subcategories__id__in'] = subcategories
+    if filters:
+        queryset = queryset.filter(**filters).distinct()
+    data['html'] = render_to_string('includes/worker_list.html', {'workers': queryset})
+    return JsonResponse(data)

@@ -1,7 +1,12 @@
 <div class="wt-checkboxholder wt-verticalscrollbar" >
     {% for city in cities %}
-    <span class="wt-checkbox">
-        <input id="{{ city.id }}" type="checkbox" name="city" value="{{ city.id }}">
+    <span class="wt-checkbox cities-span">
+        <input id="{{ city.id }}" 
+               type="checkbox" 
+               name="city" 
+               value="{{ city.id }}" 
+               class="city"
+               data-url="{% url 'ajax-filter-workers' %}">
         <label for="{{ city.id }}">{{ city.name }}</label>
     </span>
     {% endfor %}

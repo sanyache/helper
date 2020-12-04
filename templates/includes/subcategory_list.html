@@ -1,0 +1,13 @@
+<div class="wt-checkboxholder wt-verticalscrollbar" >
+    {% for subcategory in subcategories %}
+    <span class="wt-checkbox cities-span">
+        <input id="{{ subcategory.id }}" 
+               type="checkbox" 
+               name="subcategory" 
+               value="{{ subcategory.id }}" 
+               class="subcategory"
+               data-url="{% url 'ajax-filter-workers' %}">
+        <label for="{{ subcategory.id }}">{{ subcategory.name }}</label>
+    </span>
+    {% endfor %}
+</div>

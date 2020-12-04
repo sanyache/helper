@@ -139,6 +139,47 @@ jQuery(document).on('ready', function() {
 			}
 		});
 	});
+	jQuery('#categories_list').on('change', function(){
+		var category = $(this).val();
+		var url = $(this).attr('data-url');
+		$.ajax({
+			url: url,
+			data: {'category': category},
+			success: function(data) {
+				$("#subcategories_list").html(data.html);
+				var _wt_verticalscrollbar = jQuery('.wt-verticalscrollbar');
+				_wt_verticalscrollbar.mCustomScrollbar({
+					axis:"y",
+				});
+			}
+		});
+	});
+	jQuery(document).on('click', '.wt-checkbox', function(e){
+		var cities = Array.from(document.getElementsByClassName('city'));
+		var subcategories = Array.from(document.getElementsByClassName('subcategory'));
+		var city_list = [];
+		var subcategory_list = []
+		var city = e.currentTarget.firstElementChild;
+		var url = $(city).attr('data-url');
+		city.checked = !city.checked;
+		cities.forEach(el => {			
+			if( el.checked ) {
+				city_list.push(el.value);				
+			}
+		});
+		subcategories.forEach(el => {
+			if(el.checked) {
+				subcategory_list.push(el.value);
+			}
+		});
+		$.ajax({
+			url: url,
+			data: { 'cities': city_list, 'subcategories': subcategory_list },
+			success: function(data) {
+				$('#workers').html(data.html);
+			}
+		});
+	});
 	// Preview photo ============================
 	$('#id_title_image').on('change', function(){
 		document.getElementById('previewTitle').src = window.URL.createObjectURL(this.files[0]);

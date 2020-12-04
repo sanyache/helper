@@ -91,7 +91,7 @@
 										<aside id="wt-sidebar" class="wt-sidebar wt-usersidebar">
 											<div class="wt-widget wt-effectiveholder">
 												<div class="wt-widgettitle">
-													<h2>Categories</h2>
+													<h2>Оберіть місто</h2>
 												</div>
 												<div class="wt-widgetcontent">
 													<form class="wt-formtheme wt-formsearch">
@@ -101,12 +101,9 @@
 																		title="Область"
 																		id="worker_list_regions"
 																		data-url="{% url 'update_cities' %}">
-																	<option selected disabled class="text-hide">
-																		Область
-																	</option>
+																	<option selected disabled class="text-hide">Область</option>
 																	{% for region in regions %}
-																	<option value="{{ region.id }}">{{ region.name }}
-																	</option>
+																	<option value="{{ region.id }}">{{ region.name }}</option>
 																	{% endfor %}
 																</select>
 															</div>
@@ -119,49 +116,25 @@
 											</div>
 											<div class="wt-widget wt-effectiveholder">
 												<div class="wt-widgettitle">
-													<h2>Location</h2>
+													<h2>Оберіть категорію</h2>
 												</div>
 												<div class="wt-widgetcontent">
 													<form class="wt-formtheme wt-formsearch">
 														<fieldset>
 															<div class="form-group">
-																<input type="text" name="fullname" class="form-control" placeholder="Search Location">
-																<a href="javascrip:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
+																<select class="form-control" 
+																		title="Категорія"
+																		id="categories_list"
+																		data-url="{% url 'update_subcategories' %}">
+																	<option selected disabled class="text-hide">Категорія</option>
+																	{% for category in categories %}
+																	<option value="{{ category.id }}">{{ category.name }}</option>
+																	{% endfor %}
+																</select>
 															</div>
 														</fieldset>
-														<fieldset>
-															<div class="wt-checkboxholder wt-verticalscrollbar">
-																{% for region in regions %}
-																<span class="wt-checkbox">
-																	<input id="wt-description" type="checkbox" name="description" value="company" checked>
-																	<label for="wt-description"> <img src="images/flag/img-01.png" alt="img description">{{ region.name }}</label>
-																</span>
-																{% endfor %}
-																<span class="wt-checkbox">
-																	<input id="us" type="checkbox" name="description" value="company">
-																	<label for="us"> <img src="images/flag/img-02.png" alt="img description"> United States</label>
-																</span>
-																<span class="wt-checkbox">
-																	<input id="canada" type="checkbox" name="description" value="company">
-																	<label for="canada"> <img src="images/flag/img-03.png" alt="img description"> Canada</label>
-																</span>
-																<span class="wt-checkbox">
-																	<input id="england" type="checkbox" name="description" value="company">
-																	<label for="england"> <img src="images/flag/img-04.png" alt="img description"> England</label>
-																</span>
-																<span class="wt-checkbox">
-																	<input id="emirates" type="checkbox" name="description" value="company">
-																	<label for="emirates"> <img src="images/flag/img-05.png" alt="img description"> United Emirates</label>
-																</span>
-																<span class="wt-checkbox">
-																	<input id="wt-description1" type="checkbox" name="description" value="company">
-																	<label for="wt-description1"> <img src="images/flag/img-01.png" alt="img description"> Australia</label>
-																</span>
-																<span class="wt-checkbox">
-																	<input id="us1" type="checkbox" name="description" value="company">
-																	<label for="us1"> <img src="images/flag/img-02.png" alt="img description"> United States</label>
-																</span>
-															</div>
+														<fieldset id="subcategories_list">
+															
 														</fieldset>
 													</form>
 												</div>
@@ -357,7 +330,9 @@
 													</li>
 												</ul>
 											</div>
-											{% include 'includes/worker_list.html' %}
+											<div id="workers">
+												{% include 'includes/worker_list.html' %}
+											</div>	
 											<nav class="wt-pagination">
 												<ul>
 													<li class="wt-prevpage"><a href="javascrip:void(0);"><i class="lnr lnr-chevron-left"></i></a></li>
