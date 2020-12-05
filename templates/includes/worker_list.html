@@ -12,9 +12,10 @@
     <div class="wt-userlistingcontent">
         <div class="wt-contenthead">
             <div class="wt-title">
-                <a href="usersingle.html"><i class="fa fa-check-circle"></i> {{ worker.user.get_full_name }}
+                <a href="{% url 'worker_detail' worker.id %}"><i class="fa fa-check-circle"></i>
+                    профіль створено {{ worker.created }}
                 </a>
-                <h2>Classifieds Posting, Data Entry, Typing</h2>
+                <a href="{% url 'worker_detail' worker.id %}"><h3>{{ worker.user.get_full_name }}</h3></a>
             </div>
             <ul class="wt-userlisting-breadcrumb">
                 <li><span><i class="far fa-money-bill-alt"></i> $44.00 / hr</span></li>

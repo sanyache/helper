@@ -162,6 +162,14 @@ class WorkerList(ListView):
         return context
 
 
+class WorkerDetail(DetailView):
+
+    model = Worker
+    queryset = Worker.objects.select_related().prefetch_related()
+    template_name = 'usersingle.html'
+    context_object_name = 'worker'
+
+
 class WorkerListBySubCategory(ListView):
 
     model = Worker

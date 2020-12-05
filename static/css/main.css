@@ -1861,7 +1861,7 @@ body.wt-login .wt-userlogedin{display: block;}
 /* Artcle Banner Style */
 .wt-innerbannerholder{
 	height: 300px;
-	background-image: url(../images/bannerimg/img-02.jpg);
+	background-image: url(../images/bannerimg/banner-img.jpg);
 	background-size: cover;
     background-repeat: no-repeat;
 	display: -webkit-box;
@@ -4248,7 +4248,7 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 /* User Single Style */
 .wt-innerbannerholdervtwo{
-	background-image: url(../images/bannerimg/img-03.jpg);
+	background-image: url(../images/bannerimg/banner-img.jpg);
 	height: 400px;
 }
 .wt-userprofileholder{
@@ -4291,7 +4291,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-busy{background: #E50C0F;}
 .wt-away{background: #FFC30D;}
 .wt-userdetails{
-	max-width: 540px;
+	max-width: 90%;
 	padding: 0 30px 0 15px;
 }
 .wt-userdetails .wt-userlisting-breadcrumb{margin-bottom:30px; }
@@ -4312,6 +4312,10 @@ body.wt-login .wt-userlogedin{display: block;}
 	height: 99px;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+.describe p{
+	font-size: 18px;
+	line-height: 24px;
 }
 .wt-btntext{
 	float: left;

@@ -48,7 +48,11 @@ class Worker(models.Model):
     image_small_avatar = ImageSpecField(source='title_image',
                                   processors=[Transpose(), SmartResize(100, 100)],
                                   format='JPEG',
-                                  options={'quality': 50})
+                                  options={'quality': 70})
+    image_detail_avatar = ImageSpecField(source='title_image',
+                                        processors=[Transpose(), SmartResize(225, 225)],
+                                        format='JPEG',
+                                        options={'quality': 50})
     describe = models.TextField()
     created = models.DateField(auto_now_add=True, verbose_name='створено')
     is_active = models.BooleanField(default=True)
@@ -98,3 +102,7 @@ class WorkerGallery(models.Model):
 
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE, related_name='workimages')
     image = models.ImageField(upload_to=user_directory_path)
+    image_detail = ImageSpecField(source='image',
+                                         processors=[Transpose(), SmartResize(203, 140)],
+                                         format='JPEG',
+                                         options={'quality': 50})
