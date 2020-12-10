@@ -117,4 +117,4 @@ class Response(models.Model):
     created = models.DateField(auto_now_add=True, verbose_name='створено')
 
     def __str__(self):
-        return 'відгук про {} від {}'.format(self.worker, self.author)
+        return 'відгук про {} від {} рейт {}'.format(self.worker, self.author, self.rating)

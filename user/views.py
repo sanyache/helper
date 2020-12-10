@@ -169,6 +169,11 @@ class WorkerDetail(DetailView):
     template_name = 'usersingle.html'
     context_object_name = 'worker'
 
+    def get_context_data(self, **kwargs):
+        context = super(WorkerDetail, self).get_context_data(**kwargs)
+        context['responses'] = self.object.responses.all()
+        return context
+
 
 class WorkerListBySubCategory(ListView):
 
@@ -204,7 +209,6 @@ def ajax_filter_workers(request):
         filters['cities__id__in'] = cities
     if subcategories:
         subcategories = [int(id) for id in subcategories]
-        print('sub', subcategories)
         filters['subcategories__id__in'] = subcategories
     if filters:
         queryset = queryset.filter(**filters).distinct()
@@ -231,4 +235,21 @@ class DeleteResponse(DeleteView):
         return self.post(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('worker_detail', kwargs={'pk': self.object.id})
+        return reverse('home')
+
+
+def ajax_filter_response(request):
+    data = dict()
+    id = request.GET.get('id')
+    filter = request.GET.get('filter')
+    responses = Worker.objects.get(id=id).responses.all()
+    if filter == 'fresh':
+        responses = responses.order_by('-created')
+    if filter == 'old':
+        responses = responses.order_by('created')
+    if filter == 'highrate':
+        responses = responses.order_by('-rating')
+    if filter == 'lowrate':
+        responses = responses.order_by('rating')
+    data['html'] = render_to_string('includes/response_list.html', {'responses': responses})
+    return JsonResponse(data)

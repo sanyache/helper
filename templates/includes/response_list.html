@@ -1,0 +1,31 @@
+{% load static %}
+{% for response in responses %}																
+<div class="wt-userlistinghold wt-userlistingsingle">										
+    <div class="wt-userlistingcontent">
+        <div class="wt-contenthead">
+            <div class="wt-title">
+                <a href="javascript:void(0);"><i class="fa fa-check-circle"></i>{{ response.author }}</a>
+                {% if request.user == response.author %}
+                <a href="javascript:void(0);" 
+                    class="delete-response" 
+                    data-url="{% url 'delete_response' response.id %}" 
+                    style="float: right;">
+                    X
+                </a>
+                {% endif %}
+                <h3>{{ response.description }}</h3>												
+            </div>
+            <ul class="wt-userlisting-breadcrumb">												
+                <li><span><i class="far fa-calendar"></i> {{ response.created }}</span></li>
+                <li class="rating-star" data-rating="{{ response.rating }}">
+                    <span hidden class="wt-stars"><span></span></span>
+                                    
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="wt-description">
+        <p>{{ response.description }}</p>
+    </div>
+</div>
+{% endfor %}

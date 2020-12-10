@@ -32,7 +32,7 @@
 										</div>
 									</figure>
 									<div class="wt-title">
-										<h3><i class="fa fa-check-circle"></i>  {{ worker.user.get_full_name }}</h3>
+										<h3><i class="fa fa-check-circle"></i>   {{ worker.user.get_full_name }}</h3>
 										<span>5.0/5 <a class="javascript:void(0);">(860 Feedback)</a>
 											 <br>Зареєстрований {{ worker.created}}
 											 <br><a href="javascript:void(0);">{{ worker.user.email }}</a> 
@@ -102,44 +102,21 @@
 									<h2>Відгуки</h2>
 									<div class="form-group">
 										<span class="wt-select">
-											<select>
-												<option value="Show All">Show All</option>
-												<option value="One Page">One Page </option>
-												<option value="Two Page">Two Page</option>
+											<select id="filter-response" 
+													data-id="{{ worker.id }}" 
+													data-url="{% url 'filter_response' %}">
+												<option value="all">Всі</option>
+												<option value="fresh">з найсвіжіших</option>
+												<option value="old">З попередніх</option>
+												<option value="highrate">З вищим рейтенгом</option>
+												<option value="lowrate">З нищим рейтенгом</option>
 											</select>
 										</span>
 									</div>
 								</div>
-								{% for response in worker.responses.all %}																
-								<div class="wt-userlistinghold wt-userlistingsingle">										
-									<div class="wt-userlistingcontent">
-										<div class="wt-contenthead">
-											<div class="wt-title">
-												<a href="javascript:void(0);"><i class="fa fa-check-circle"></i>{{ response.author }}</a>
-												{% if request.user == response.author %}
-												<a href="javascript:void(0);" 
-												   class="delete-response" 
-												   data-url="{% url 'delete_response' response.id %}" 
-												   style="float: right;">
-												   X {{ response.id }}
-												</a>
-												{% endif %}
-												<h3>{{ response.description }}</h3>												
-											</div>
-											<ul class="wt-userlisting-breadcrumb">												
-												<li><span><i class="far fa-calendar"></i> {{ response.created }}</span></li>
-												<li class="rating-star" data-rating="{{ response.rating }}">
-													<span hidden class="wt-stars"><span></span></span>
-																	
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="wt-description">
-										<p>{{ response.description }}</p>
-									</div>
-								</div>
-								{% endfor %}								
+								<div id="response-list"> 
+									{% include 'includes/response_list.html' %}
+								</div>								
 								<div class="wt-btnarea">
 									<a href="javascript:void(0);" class="wt-btn">Load More</a>
 								</div>
@@ -219,7 +196,7 @@
 											<div class="form-group">
 												<span class="wt-select">
 													<select id="select-star" name="rating">
-														<option value="reason">Оцініть роботу</option>
+														<option value="">Оцініть роботу</option>
 														<option value="5" >5</i></option>
 														<option value="4">4</option>
 														<option value="3">3</option>

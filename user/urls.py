@@ -19,4 +19,5 @@ urlpatterns = [
     path('ajax/filter_workers', ajax_filter_workers, name='ajax-filter-workers'),
     path('create_response/<int:pk>', create_response, name='create_response'),
     path('delete_response/<int:pk>', DeleteResponse.as_view(), name='delete_response'),
+    path('ajax/filter_response', ajax_filter_response, name='filter_response'),
 ]

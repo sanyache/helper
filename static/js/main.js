@@ -170,6 +170,22 @@ jQuery(document).on('ready', function() {
 			}
 		});
 	});
+	jQuery('#filter-response').on('change', function(){
+		var filter = $(this).val();
+		var id = $(this).attr('data-id')
+		var url = $(this).attr('data-url');
+		$.ajax({
+			url: url,
+			data: {'filter': filter, 'id': id, 'url': url},
+			success: function(data) {
+				$("#response-list").html(data.html);
+				SwitchStars();
+			},
+			error: function(error){
+				console.log('error', error);
+			}
+		});
+	});
 	jQuery(document).on('click', '.wt-checkbox', function(e){
 		var cities = Array.from(document.getElementsByClassName('city'));
 		var subcategories = Array.from(document.getElementsByClassName('subcategory'));
@@ -197,8 +213,10 @@ jQuery(document).on('ready', function() {
 			method: 'GET',
 			data: { 'cities': city_list, 'subcategories': subcategory_list },
 			success: function(data) {
+				console.log('data', data);
 				$('#workers').html(data.html);
-			}
+			},
+			
 		});
 	});
 	// Preview photo ============================
