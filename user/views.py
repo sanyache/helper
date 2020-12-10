@@ -210,3 +210,25 @@ def ajax_filter_workers(request):
         queryset = queryset.filter(**filters).distinct()
     data['html'] = render_to_string('includes/worker_list.html', {'workers': queryset})
     return JsonResponse(data)
+
+
+def create_response(request, pk):
+    if request.method == 'POST':
+        worker = Worker.objects.get(id=pk)
+        user = request.user
+        rating = request.POST.get('rating')
+        description = request.POST.get('description')
+        if rating or description:
+            Response.objects.create(author=user, worker=worker, description=description,
+                                    rating= rating)
+    return HttpResponseRedirect(reverse('worker_detail', args=[pk]))
+
+
+class DeleteResponse(DeleteView):
+    model = Response
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('worker_detail', kwargs={'pk': self.object.id})

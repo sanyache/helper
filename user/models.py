@@ -106,3 +106,15 @@ class WorkerGallery(models.Model):
                                          processors=[Transpose(), SmartResize(203, 140)],
                                          format='JPEG',
                                          options={'quality': 50})
+
+
+class Response(models.Model):
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    worker = models.ForeignKey(Worker, on_delete=models.CASCADE, related_name='responses')
+    description = models.TextField(blank=True)
+    rating = models.SmallIntegerField(null=True, blank=True, verbose_name='рейтинг')
+    created = models.DateField(auto_now_add=True, verbose_name='створено')
+
+    def __str__(self):
+        return 'відгук про {} від {}'.format(self.worker, self.author)

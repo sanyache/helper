@@ -32,3 +32,9 @@ class SkillTagAdmin(admin.ModelAdmin):
 class WorkGalleryAdmin(admin.ModelAdmin):
 
     list_display = ('worker', )
+
+
+@admin.register(Response)
+class ResponseAdmin(admin.ModelAdmin):
+
+    list_display = ('worker', 'author')

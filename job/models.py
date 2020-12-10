@@ -48,3 +48,5 @@ class SubCategoryJob(CategoryAbstract):
     class Meta:
         verbose_name = 'Підкатегорія для роботи'
         verbose_name_plural = 'Підкатегорії для роботи'
+
+

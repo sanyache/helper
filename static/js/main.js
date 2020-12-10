@@ -56,6 +56,22 @@ jQuery(document).on('ready', function() {
 	} 
 	hideAllUl();
 	// setStyle();
+	// Switch stars =======================================================
+	function SwitchStars(){
+		var spanlist = document.querySelectorAll('.rating-star');
+		spanlist.forEach(el => {
+			var rating = $(el).attr('data-rating');
+			var blank = el.firstElementChild;			
+			if(rating) {
+				for(var i=1; i<=rating; i++){	
+					var clone = blank.cloneNode(true);					
+					clone.hidden = false;
+					el.appendChild(clone);					
+				}
+			}
+		});
+	}
+	SwitchStars();
 	// Clone block ===============================
 	jQuery('#add_new_tag').on('click', function(){
 		var blank = document.querySelector('#tag_list').lastElementChild;
@@ -231,7 +247,16 @@ jQuery(document).on('ready', function() {
 		if(list.hidden) {
 			list.hidden = false;
 		}
-	})
+	});
+	$(document).on('click', '.delete-response', function() {
+		var div = $(this).closest('div .wt-userlistingsingle');
+		div.remove();
+		if ($(this).attr('data-url')){
+			$.ajax({
+				url: $(this).attr('data-url'),
+			});
+		}
+	});
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){
 		event.preventDefault();

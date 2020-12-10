@@ -16,5 +16,7 @@ urlpatterns = [
     path('worker_detail/<int:pk>', WorkerDetail.as_view(), name='worker_detail'),
     path('worker_by_subcategory/<int:pk>', WorkerListBySubCategory.as_view(),
          name='worker_by_subcategory'),
-    path('ajax/filter_workers', ajax_filter_workers, name='ajax-filter-workers')
+    path('ajax/filter_workers', ajax_filter_workers, name='ajax-filter-workers'),
+    path('create_response/<int:pk>', create_response, name='create_response'),
+    path('delete_response/<int:pk>', DeleteResponse.as_view(), name='delete_response'),
 ]
