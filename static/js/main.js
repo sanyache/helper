@@ -60,7 +60,7 @@ jQuery(document).on('ready', function() {
 	function SwitchStars(){
 		var spanlist = document.querySelectorAll('.rating-star');
 		spanlist.forEach(el => {
-			var rating = $(el).attr('data-rating');
+			var rating = parseInt($(el).attr('data-rating'));
 			var blank = el.firstElementChild;			
 			if(rating) {
 				for(var i=1; i<=rating; i++){	

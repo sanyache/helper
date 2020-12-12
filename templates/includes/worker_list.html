@@ -24,14 +24,10 @@
             </ul>
         </div>
         <div class="wt-rightarea">
-            <span class="wt-starsvtwo">
-                <i class="fa fa-star fill"></i>
-                <i class="fa fa-star fill"></i>
-                <i class="fa fa-star fill"></i>
-                <i class="fa fa-star fill"></i>
-                <i class="fa fa-star fill"></i>
+            <span class="wt-starsvtwo rating-star" data-rating="{{ worker.rating }}">                
+                <i hidden class="fa fa-star fill"></i>
             </span>
-            <span class="wt-starcontent">4.5/<sub>5</sub> <em>(860 Feedback)</em></span>
+            <span class="wt-starcontent">{{ worker.rating|floatformat }} <em>Відгуків: {{ worker.feedback }}</em></span>
         </div>
     </div>
     <div class="wt-description">

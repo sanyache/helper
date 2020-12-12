@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
-from django.db.models import Q
+from django.db.models import Avg, Count
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from job.models import CategoryJob
@@ -171,7 +171,7 @@ class WorkerDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(WorkerDetail, self).get_context_data(**kwargs)
-        context['responses'] = self.object.responses.all()
+        context['responses'] = self.object.responses.all().select_related('author')
         return context
 
 
@@ -185,6 +185,8 @@ class WorkerListBySubCategory(ListView):
     def get_queryset(self):
         queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])\
                                         .prefetch_related('skilltags').select_related('user')
+        queryset = queryset.annotate(rating=(Avg('responses__rating')+15)/5).order_by(
+                                    '-rating').annotate(feedback=Count('responses'))
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -242,7 +244,7 @@ def ajax_filter_response(request):
     data = dict()
     id = request.GET.get('id')
     filter = request.GET.get('filter')
-    responses = Worker.objects.get(id=id).responses.all()
+    responses = Worker.objects.get(id=id).responses.all().select_related('author')
     if filter == 'fresh':
         responses = responses.order_by('-created')
     if filter == 'old':
