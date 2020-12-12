@@ -5,7 +5,8 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Sum, FloatField
+from django.db.models.functions import Cast
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from job.models import CategoryJob
@@ -149,7 +150,7 @@ class DeletePhoto(DeleteView):
 class WorkerList(ListView):
 
     model = Worker
-    queryset = Worker.objects.filter(is_active=True).prefetch_related('skilltags')
+    queryset = Worker.objects.filter(is_active=True).prefetch_related('skilltags').select_related()
     context_object_name = 'workers'
     template_name = 'userlisting.html'
 
@@ -160,6 +161,17 @@ class WorkerList(ListView):
         context['regions'] = regions
         context['categories'] = categories
         return context
+
+    def get_queryset(self):
+        queryset = self.queryset
+        queryset = queryset.annotate(rate=((Sum('responses__rating',
+                                                output_field=FloatField()) + 15.0) /
+                                           (1.0 * Count('responses__rating',
+                                                        output_field=FloatField()) + 5.0))) \
+                                           .order_by('-rate') \
+                                           .annotate(feedback=Count('responses')) \
+                                           .annotate(rating=Avg('responses__rating'))
+        return queryset
 
 
 class WorkerDetail(DetailView):
@@ -185,8 +197,13 @@ class WorkerListBySubCategory(ListView):
     def get_queryset(self):
         queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])\
                                         .prefetch_related('skilltags').select_related('user')
-        queryset = queryset.annotate(rating=(Avg('responses__rating')+15)/5).order_by(
-                                    '-rating').annotate(feedback=Count('responses'))
+        queryset = queryset.annotate(rate=((Sum('responses__rating',
+                                                  output_field=FloatField())+15.0)/
+                                             (1.0*Count('responses__rating',
+                                              output_field=FloatField())+5.0)))\
+                          .order_by('-rate')\
+                          .annotate(feedback=Count('responses'))\
+                          .annotate(rating=Avg('responses__rating'))
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):

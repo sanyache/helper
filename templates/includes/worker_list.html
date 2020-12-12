@@ -27,7 +27,7 @@
             <span class="wt-starsvtwo rating-star" data-rating="{{ worker.rating }}">                
                 <i hidden class="fa fa-star fill"></i>
             </span>
-            <span class="wt-starcontent">{{ worker.rating|floatformat }} <em>Відгуків: {{ worker.feedback }}</em></span>
+            <span class="wt-starcontent">{{ worker.rating| floatformat:2}} <em>Відгуків: {{ worker.feedback }}</em></span>
         </div>
     </div>
     <div class="wt-description">
