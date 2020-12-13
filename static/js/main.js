@@ -72,6 +72,29 @@ jQuery(document).on('ready', function() {
 		});
 	}
 	SwitchStars();
+	// Load More ========================================================
+	$(document).on('click', 'a.load-more',function(event){
+		var link = location.href;
+		var num_pages = $(this).data('pages');
+		var page = $(this).data('page');
+		page += 1;
+		$(this).data('page', page);
+		if( page <= num_pages){
+			link =  link+"?page="+ page;
+				$.ajax({
+				'url': link,
+				'dataType': 'html',
+				'type': 'get',
+				'success': function(data, status, xhr){ 
+					var html = $(data).find('.items');
+					$('.pages').append(html);				
+				}
+			});
+		}
+		if( page == num_pages ){
+		  $(this).hide();
+	  }
+	});
 	// Clone block ===============================
 	jQuery('#add_new_tag').on('click', function(){
 		var blank = document.querySelector('#tag_list').lastElementChild;

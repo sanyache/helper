@@ -9,6 +9,7 @@ from django.db.models import Avg, Count, Sum, FloatField
 from django.db.models.functions import Cast
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
+from .utils import paginate
 from job.models import CategoryJob
 
 
@@ -183,7 +184,8 @@ class WorkerDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(WorkerDetail, self).get_context_data(**kwargs)
-        context['responses'] = self.object.responses.all().select_related('author')
+        responses = self.object.responses.all().select_related('author')
+        context = paginate(responses, 2, self.request, context, 'responses')
         return context
 
 
