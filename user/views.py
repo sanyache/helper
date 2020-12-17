@@ -76,6 +76,20 @@ def worker_account(request):
         return HttpResponseRedirect(reverse('worker_account'))
 
 
+def toggle_account(request):
+    if request.method == 'POST':
+        toggle = request.POST.get('toggle_account')
+        worker, created = Worker.objects.get_or_create(user=request.user)
+        if toggle:
+            worker.is_active = True
+            messages.info(request, 'Ваш профіль увімкнено')
+        else:
+            worker.is_active = False
+            messages.error(request, 'Ваш профіль вимкнено')
+        worker.save()
+    return HttpResponseRedirect(reverse('worker_account'))
+
+
 def update_cities(request):
     data = dict()
     region = request.GET.get('region', None)
@@ -88,7 +102,7 @@ def update_cities(request):
 def update_tags(request):
 
     if request.method == 'POST':
-        worker, created = Worker.objects.get_or_create(user=request.usere)
+        worker, created = Worker.objects.get_or_create(user=request.user)
         tags = request.POST.getlist('tag-list')
         if tags:
             for item in tags:
@@ -101,7 +115,7 @@ def update_tags(request):
 def update_phones(request):
 
     if request.method == 'POST':
-        worker, created = Worker.objects.get_or_create(user=request.usere)
+        worker, created = Worker.objects.get_or_create(user=request.user)
         phones = request.POST.getlist('phone-list')
         if phones:
             for phone in phones:
@@ -113,7 +127,7 @@ def update_phones(request):
 def update_photos(request):
 
     if request.method == 'POST':
-        worker, created = Worker.objects.get_or_create(user=request.usere)
+        worker, created = Worker.objects.get_or_create(user=request.user)
         photos = request.FILES.getlist('portfolio')
         if photos:
             for photo in photos:
