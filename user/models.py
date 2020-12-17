@@ -46,9 +46,9 @@ class Worker(models.Model):
     title_image = models.ImageField(upload_to='worker/', blank=True, null=True,
                                     verbose_name='фото користувача')
     image_small_avatar = ImageSpecField(source='title_image',
-                                  processors=[Transpose(), SmartResize(100, 100)],
-                                  format='JPEG',
-                                  options={'quality': 70})
+                                        processors=[Transpose(), SmartResize(100, 100)],
+                                        format='JPEG',
+                                        options={'quality': 70})
     image_detail_avatar = ImageSpecField(source='title_image',
                                         processors=[Transpose(), SmartResize(225, 225)],
                                         format='JPEG',

@@ -5,12 +5,16 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
-from django.db.models import Avg, Count, Sum, FloatField
+from django.db.models import Avg, Count, Sum, FloatField, Func
 from django.db.models.functions import Cast
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from .utils import paginate
 from job.models import CategoryJob
+
+
+class IsNull(Func):
+    template = '%(expressions)s IS NULL'
 
 
 # Create your views here.
@@ -36,24 +40,23 @@ def worker_account(request):
     regions = Region.objects.all()
     if request.method == "GET":
         user_form = UserForm(instance=request.user)
-        worker, created = Worker.objects.get_or_create(user=request.user)
-        worker_form = WorkerForm(instance=worker)
-        try:
-            tags = worker.skilltags.all()
-        except:
-            tags = []
-        phones = Phone.objects.filter(worker=worker)
-        photos = WorkerGallery.objects.filter(worker=worker)
+        worker = Worker.objects.filter(user=request.user).first()
+        if worker:
+            worker_form = WorkerForm(instance=worker)
+            try:
+                tags = worker.skilltags.all()
+            except:
+                tags = []
+            phones = Phone.objects.filter(worker=worker)
+            photos = WorkerGallery.objects.filter(worker=worker)
+        else:
+            worker_form = WorkerForm()
         return render(request, 'dashboard-profile.html',
-                      {'user_form': user_form, 'worker_form': worker_form, 'worker': worker,
-                       'categories_job': categories_job,
-                       'regions': regions,
-                       'tags': tags,
-                       'phones': phones,
-                       'photos': photos})
+                      locals())
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
-        worker_form = WorkerForm(request.POST, request.FILES, instance=request.user.worker)
+        worker, created = Worker.objects.get_or_create(user=request.user)
+        worker_form = WorkerForm(request.POST, request.FILES, instance=worker)
 
         if user_form.is_valid() and worker_form.is_valid():
             print('user',user_form.cleaned_data)
@@ -85,7 +88,7 @@ def update_cities(request):
 def update_tags(request):
 
     if request.method == 'POST':
-        worker = request.user.worker
+        worker, created = Worker.objects.get_or_create(user=request.usere)
         tags = request.POST.getlist('tag-list')
         if tags:
             for item in tags:
@@ -98,7 +101,7 @@ def update_tags(request):
 def update_phones(request):
 
     if request.method == 'POST':
-        worker = request.user.worker
+        worker, created = Worker.objects.get_or_create(user=request.usere)
         phones = request.POST.getlist('phone-list')
         if phones:
             for phone in phones:
@@ -110,7 +113,7 @@ def update_phones(request):
 def update_photos(request):
 
     if request.method == 'POST':
-        worker = request.user.worker
+        worker, created = Worker.objects.get_or_create(user=request.usere)
         photos = request.FILES.getlist('portfolio')
         if photos:
             for photo in photos:
@@ -148,6 +151,18 @@ class DeletePhoto(DeleteView):
         return self.post(request, *args, **kwargs)
 
 
+def queryset_orderby_response(queryset):
+    order_func = dict()
+    order_func['rate'] = ((Sum('responses__rating', output_field=FloatField()) + 15.0) /
+                          (Count('responses__rating', output_field=FloatField()) + 5.0))
+    queryset = queryset.annotate(**order_func) \
+        .annotate(rating_isnull=IsNull('responses')) \
+        .order_by('rating_isnull', '-rate') \
+        .annotate(feedback=Count('responses')) \
+        .annotate(rating=Avg('responses__rating'))
+    return queryset
+
+
 class WorkerList(ListView):
 
     model = Worker
@@ -165,13 +180,7 @@ class WorkerList(ListView):
 
     def get_queryset(self):
         queryset = self.queryset
-        queryset = queryset.annotate(rate=((Sum('responses__rating',
-                                                output_field=FloatField()) + 15.0) /
-                                           (1.0 * Count('responses__rating',
-                                                        output_field=FloatField()) + 5.0))) \
-                                           .order_by('-rate') \
-                                           .annotate(feedback=Count('responses')) \
-                                           .annotate(rating=Avg('responses__rating'))
+        queryset = queryset_orderby_response(queryset)
         return queryset
 
 
@@ -192,20 +201,13 @@ class WorkerDetail(DetailView):
 class WorkerListBySubCategory(ListView):
 
     model = Worker
-    queryset = Worker.objects.filter(is_active=True)
     context_object_name = 'workers'
     template_name = 'userlisting.html'
 
     def get_queryset(self):
         queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])\
                                         .prefetch_related('skilltags').select_related('user')
-        queryset = queryset.annotate(rate=((Sum('responses__rating',
-                                                  output_field=FloatField())+15.0)/
-                                             (1.0*Count('responses__rating',
-                                              output_field=FloatField())+5.0)))\
-                          .order_by('-rate')\
-                          .annotate(feedback=Count('responses'))\
-                          .annotate(rating=Avg('responses__rating'))
+        queryset = queryset_orderby_response(queryset)
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -233,6 +235,7 @@ def ajax_filter_workers(request):
         filters['subcategories__id__in'] = subcategories
     if filters:
         queryset = queryset.filter(**filters).distinct()
+    queryset = queryset_orderby_response(queryset)
     data['html'] = render_to_string('includes/worker_list.html', {'workers': queryset})
     return JsonResponse(data)
 
