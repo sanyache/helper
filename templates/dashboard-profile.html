@@ -354,37 +354,37 @@
 													<button type="submit" class="wt-btn submit">Ok</button>
 												</form>
 											</div>																		
+										</div>
+										<div class="wt-awardsholder tab-pane fade" id="wt-set">
+											<div class="wt-addprojectsholder wt-tabsinfo">
+												<div class="wt-tabscontenttitle wt-addnew">
+													<h2>Вимкнути профіль</h2>
+													<p>Ви можете тимчасово вимкнути профіль</p>			
+												</div>
+												<form method="POST" action="{% url 'toggle_account' %}">
+													{% csrf_token %}				
+													<div class="form-group">
+														<div class="wt-on-off pull-right">
+															<input type="checkbox" 
+																	id="hide-onfour" 
+																	name="toggle_account"
+																	{% if worker.is_active %}
+																	checked=""
+																	{% endif %}
+															>		
+															<label for="hide-onfour"><i></i></label>
+														</div>
+														{% if worker.is_active %}
+														<span>Вимкнути тимчасово профіль</span>
+														{% else %}
+														<span>Увімкнути профіль</span>	
+														{% endif %}	
+													</div>																										
+													<button type="submit" class="wt-btn submit">Ok</button>
+												</form>
+											</div>																		
 										</div>										
-									</div>
-									<div class="wt-awardsholder tab-pane fade" id="wt-set">
-										<div class="wt-addprojectsholder wt-tabsinfo">
-											<div class="wt-tabscontenttitle wt-addnew">
-												<h2>Вимкнути профіль</h2>
-												<p>Ви можете тимчасово вимкнути профіль</p>			
-											</div>
-											<form method="POST" action="{% url 'toggle_account' %}">
-												{% csrf_token %}				
-												<div class="form-group">
-													<div class="wt-on-off pull-right">
-														<input type="checkbox" 
-																id="hide-onfour" 
-																name="toggle_account"
-																{% if worker.is_active %}
-																checked=""
-																{% endif %}
-														>		
-														<label for="hide-onfour"><i></i></label>
-													</div>
-													{% if worker.is_active %}
-													<span>Вимкнути тимчасово профіль</span>
-													{% else %}
-													<span>Увімкнути профіль</span>	
-													{% endif %}	
-												</div>																										
-												<button type="submit" class="wt-btn submit">Ok</button>
-											</form>
-										</div>																		
-									</div>
+									</div>									
 								</div>
 							</div>							
 						</div>
