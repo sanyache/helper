@@ -38,3 +38,9 @@ class WorkGalleryAdmin(admin.ModelAdmin):
 class ResponseAdmin(admin.ModelAdmin):
 
     list_display = ('worker', 'author')
+
+
+@admin.register(Reply)
+class Reply(admin.ModelAdmin):
+
+    list_display = ('author', )

@@ -17,6 +17,13 @@
             </div>
             <ul class="wt-userlisting-breadcrumb">												
                 <li><span><i class="far fa-calendar"></i> {{ response.created }}</span></li>
+                <li>
+                    <a href="javascript:void(0);" 
+                    class="reply"
+                    data-id="{{ response.id }}"                                       
+                    >Відповісти
+                </a>
+                </li>
                 <li class="rating-star" data-rating="{{ response.rating }}">
                     <span hidden class="wt-stars"><span></span></span>
                                     
@@ -24,8 +31,47 @@
             </ul>
         </div>
     </div>
-    <div class="wt-description">
-        <p>{{ response.description }}</p>
+    <div class="wt-title" id="response-{{ response.id }}">
+        {% for reply in response.replies.all %}
+        <div>
+            <br/>
+            <span>{{ reply.author }}{{ reply.created }}</span><p>{{ reply.text }}</p>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endfor %}
+<!-- Modal window -->
+<div class="modal fade" id="modal-reply">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Додати коментар</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>                
+            </div>
+            <form class="modal-form" method="post" action="{% url 'create_reply' %}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea class="form-control" 
+                            name="description" 
+                            id="text-reply"
+                            placeholder="Напишіть відповідь"></textarea>
+                    </div>
+                    <input type="hidden" name="id" value="" id='response-id'>
+                </div>
+                {% csrf_token %}
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+                    <button type="submit" 
+                            class="btn btn-primary"
+                            data-id=""
+                            id="add-reply" 
+                        >Додати коментар
+                    </button>
+                </div>
+            </form>    
+        </div>
+    </div>
+</div>

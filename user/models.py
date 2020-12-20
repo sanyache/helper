@@ -118,3 +118,14 @@ class Response(models.Model):
 
     def __str__(self):
         return 'відгук про {} від {} рейт {}'.format(self.worker, self.author, self.rating)
+
+
+class Reply(models.Model):
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    response = models.ForeignKey(Response, on_delete=models.CASCADE, related_name='replies')
+    text = models.TextField()
+    created = models.DateField(auto_now_add=True, verbose_name='створено')
+
+    def __str__(self):
+        return 'репліка від {} на відгук {}'.format(self.author, self.response.author)

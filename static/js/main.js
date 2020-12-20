@@ -87,7 +87,8 @@ jQuery(document).on('ready', function() {
 				'type': 'get',
 				'success': function(data, status, xhr){ 
 					var html = $(data).find('.items');
-					$('.pages').append(html);				
+					$('.pages').append(html);
+					SwitchStars();			
 				}
 			});
 		}
@@ -236,7 +237,6 @@ jQuery(document).on('ready', function() {
 			method: 'GET',
 			data: { 'cities': city_list, 'subcategories': subcategory_list },
 			success: function(data) {
-				console.log('data', data);
 				$('#workers').html(data.html);
 			},
 			
@@ -297,6 +297,33 @@ jQuery(document).on('ready', function() {
 				url: $(this).attr('data-url'),
 			});
 		}
+	});
+	// Reply =========================================================
+	var modal = document.getElementById('modal-reply');
+	$(document).on('click', '.reply', function(){		
+		$(modal).modal('show');
+		var id = $(this).attr('data-id');
+		var addReply = document.getElementById('response-id');
+		$(addReply).attr('value', id);
+	});
+	$('#modal-reply').on('submit', '.modal-form', function(e){
+		e.preventDefault()
+		var id = $('#response-id').attr('value');
+		var id_str = '#response-'+id;
+		var form = $(this)
+		var text = $('#text-reply').val();
+		if(text){
+			$.ajax({
+				url: form.attr('action'),
+				type: form.attr('method'),
+				dataType: 'json',
+				data: form.serialize(),
+				success: function(data){
+					$(id_str).append(data.reply);
+					$(modal).modal('hide');
+				}
+			});
+		}	
 	});
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){

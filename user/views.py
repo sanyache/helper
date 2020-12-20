@@ -207,7 +207,8 @@ class WorkerDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(WorkerDetail, self).get_context_data(**kwargs)
-        responses = self.object.responses.all().select_related('author')
+        responses = self.object.responses.all().select_related().prefetch_related('replies',
+                                                                                  'replies__author')
         context = paginate(responses, 2, self.request, context, 'responses')
         return context
 
@@ -290,4 +291,17 @@ def ajax_filter_response(request):
     if filter == 'lowrate':
         responses = responses.order_by('rating')
     data['html'] = render_to_string('includes/response_list.html', {'responses': responses})
+    return JsonResponse(data)
+
+
+def create_reply(request):
+    data = dict()
+    if request.method == "POST":
+        id = request.POST.get('id')
+        author = request.user
+        text = request.POST.get('description')
+        response = Response.objects.get(id=id)
+        reply =  Reply.objects.create(response=response, author=author,
+                                      text=text).select_related('response')
+        data['reply'] = render_to_string('includes/replies_list.html', {'reply': reply})
     return JsonResponse(data)
