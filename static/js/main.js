@@ -210,20 +210,28 @@ jQuery(document).on('ready', function() {
 			}
 		});
 	});
-	jQuery(document).on('click', '.wt-checkbox', function(e){
+	jQuery(document).on('click', '.wt-checkbox, .wt-filtertag', function(e){
+		console.log('e', e.currentTarget.classList[0]);
 		var cities = Array.from(document.getElementsByClassName('city'));
 		var subcategories = Array.from(document.getElementsByClassName('subcategory'));
 		var city_list = [];
 		var subcategory_list = []
 		var city = e.currentTarget.firstElementChild;
-		var url = $(city).attr('data-url');
+		var url = $("#cities_list").attr('data-url');
 		var pk = $(document.getElementById('subcategories_list')).attr('data-pk');
-		city.checked = !city.checked;
-		cities.forEach(el => {			
-			if( el.checked ) {
-				city_list.push(el.value);				
-			}
-		});
+		var tag = $("#tag").attr('data-tag');
+		if(e.currentTarget.classList[0] === 'wt-filtertag') {
+			$(this).hide();
+			tag = '';
+		}
+		if(city){
+			city.checked = !city.checked;
+			cities.forEach(el => {			
+				if( el.checked ) {
+					city_list.push(el.value);				
+				}
+			});
+		}
 		subcategories.forEach(el => {
 			if(el.checked) {
 				subcategory_list.push(el.value);
@@ -235,9 +243,10 @@ jQuery(document).on('ready', function() {
 		$.ajax({
 			url: url,
 			method: 'GET',
-			data: { 'cities': city_list, 'subcategories': subcategory_list },
+			data: { 'cities': city_list, 'subcategories': subcategory_list, 'tag': tag },
 			success: function(data) {
 				$('#workers').html(data.html);
+				$('#length').html(data.length);
 			},
 			
 		});

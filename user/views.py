@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
-from django.db.models import Avg, Count, Sum, FloatField, Func
+from django.db.models import Avg, Count, Sum, FloatField, Func, Q
 from django.db.models.functions import Cast
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
@@ -208,7 +208,14 @@ class WorkerDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(WorkerDetail, self).get_context_data(**kwargs)
         responses = self.object.responses.all().select_related().prefetch_related('replies',
-                                                                                  'replies__author')
+                                                                                  'replies__author')\
+                                                .order_by('created')
+        tags = self.object.skilltags.all().only('name')
+        q = Q()
+        for tag in tags:
+            q |= Q(name__icontains = tag)
+        similar_tags = SkillTag.objects.filter(q)
+        print(('similar', similar_tags))
         context = paginate(responses, 2, self.request, context, 'responses')
         return context
 
@@ -235,12 +242,34 @@ class WorkerListBySubCategory(ListView):
         return context
 
 
+class WorkerListByTag(ListView):
+    model = Worker
+    context_object_name = 'workers'
+    template_name = 'userlisting.html'
+
+    def get_queryset(self):
+        queryset = Worker.objects.prefetch_related('skilltags').select_related('user').filter(
+            is_active=True, skilltags__name__iexact=self.kwargs['tag'])
+        queryset = queryset_orderby_response(queryset)
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerListByTag, self).get_context_data(object_list=None, **kwargs)
+        regions = Region.objects.all()
+        categories = CategoryJob.objects.all()
+        context['regions'] = regions
+        context['categories'] = categories
+        context['tag'] = self.kwargs['tag']
+        return context
+
+
 def ajax_filter_workers(request):
     data = dict()
     filters = dict()
     queryset = Worker.objects.filter(is_active=True).prefetch_related(
         'skilltags').select_related('user')
     cities = request.GET.getlist('cities[]')
+    tag = request.GET.get('tag')
     subcategories = request.GET.getlist('subcategories[]')
     if cities:
         cities = [int(id) for id in cities]
@@ -248,10 +277,13 @@ def ajax_filter_workers(request):
     if subcategories:
         subcategories = [int(id) for id in subcategories]
         filters['subcategories__id__in'] = subcategories
+    if tag:
+        filters['skilltags__name__exact'] = tag
     if filters:
         queryset = queryset.filter(**filters).distinct()
     queryset = queryset_orderby_response(queryset)
     data['html'] = render_to_string('includes/worker_list.html', {'workers': queryset})
+    data['length'] = queryset.count()
     return JsonResponse(data)
 
 

@@ -59,7 +59,7 @@
 																</select>
 															</div>
 														</fieldset>
-														<fieldset id="cities_list">																																								
+														<fieldset id="cities_list" data-url="{% url 'ajax-filter-workers' %}">																																								
 															
 														</fieldset>
 													</form>
@@ -89,9 +89,8 @@
 																  data-pk="{{ pk }}"
 																  {% else %}
 																  data-pk=""
-																  {% endif %}
-														>
-															
+																  {% endif %}																  
+														>												
 														</fieldset>
 													</form>
 												</div>
@@ -263,30 +262,30 @@
 									<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
 										<div class="wt-userlistingholder wt-userlisting wt-haslayout">
 											<div class="wt-userlistingtitle">
-												<span>01 - 48 of 57143 results for <em>"Logo Design"</em></span>
+												<span> <em>Знайдено за пошуком: </em><em id="length">{{ workers|length }}</em></span>
 											</div>
-											<div class="wt-filterholder">
+											
+											<div class="wt-filterholder" 
+												 id="tag" 
+												 {% if tag %}
+												 data-tag="{{ tag }}"
+												 {% else %}
+												 data-tag=""
+												 {% endif %}
+												 >
+												{% if tag %}
 												<ul class="wt-filtertag">
-													<li class="wt-filtertagclear">
+													<!-- <li class="wt-filtertagclear">
 														<a href="javascrip:void(0)"><i class="fa fa-times"></i> <span>Clear All Filter</span></a>
-													</li>
-												 	<li class="alert alert-dismissable fade in">
-														<a href="javascrip:void(0)"><i class="fa fa-times close" data-dismiss="alert" aria-label="close"></i> <span>Graphic Design</span></a>
-													</li>
-													<li class="alert alert-dismissable fade in">
-														<a href="javascrip:void(0)"><i class="fa fa-times close" data-dismiss="alert" aria-label="close"></i> <span>Any Hourly Rate</span></a>
-													</li>
-													<li class="alert alert-dismissable fade in">
-														<a href="javascrip:void(0)"><i class="fa fa-times close" data-dismiss="alert" aria-label="close"></i> <span>Any Freelancer Type</span></a>
-													</li>
-													<li class="alert alert-dismissable fade in">
-														<a href="javascrip:void(0)"><i class="fa fa-times close" data-dismiss="alert" aria-label="close"></i> <span>Chinese</span></a>
-													</li>
-													<li class="alert alert-dismissable fade in">
-														<a href="javascrip:void(0)"><i class="fa fa-times close" data-dismiss="alert" aria-label="close"></i> <span>English</span></a>
-													</li>
+													</li> -->
+												 	<li class="alert alert-dismissable ">
+														<a href="javascript:void(0);" id="tag-close"><i class="fa fa-times close" data-dismiss="alert" aria-label="close"></i>
+															<span>{{ tag }}</span>
+														</a>
+													</li>													
 												</ul>
-											</div>
+												{% endif %}
+											</div>												
 											<div id="workers">
 												{% include 'includes/worker_list.html' %}
 											</div>	

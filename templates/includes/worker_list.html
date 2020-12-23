@@ -35,7 +35,7 @@
     </div>
     <div class="wt-tag wt-widgettag">
         {% for tag in worker.skilltags.all %}
-        <a href="javascript:void(0);">{{ tag.name }}</a>
+        <a href="{% url 'worker_by_tag' tag.name %}">{{ tag.name }}</a>
         {% endfor %}
     </div>
 </div>
