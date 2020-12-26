@@ -85,7 +85,7 @@ jQuery(document).on('ready', function() {
 				'url': link,
 				'dataType': 'html',
 				'type': 'get',
-				'success': function(data, status, xhr){ 
+				'success': function(data, status, xhr){
 					var html = $(data).find('.items');
 					$('.pages').append(html);
 					SwitchStars();			
@@ -95,6 +95,39 @@ jQuery(document).on('ready', function() {
 		if( page == num_pages ){
 		  $(this).hide();
 	  }
+	});
+	// Paginator ==============================================================
+	$(document).on('click', 'a.paginate', function(event){
+		var link = $('#nav-paginate').data('url');		
+		var page = $(this).data('page');
+		if(link.includes('?')){
+			link += '&page=' + page;
+		} else {
+			link += "?page=" + page;
+		}
+		if(link.includes('ajax')){
+			$.ajax({
+				'url': link,
+				'dataType': 'json',
+				'type': 'get',
+				'success': function(data){
+					$('#workers').html(data.html);
+					$('html, body').animate({ scrollTop: 0 }, 'fast');								
+				}
+			});
+		} else {
+			$.ajax({
+				'url': link,
+				'dataType': 'html',
+				'type': 'get',
+				'success': function(data){							
+					var html = $(data).find('.items');
+					$('.pages').html(html);
+					$('html, body').animate({ scrollTop: 0 }, 'fast');
+				}
+			});
+		}
+		
 	});
 	// Clone block ===============================
 	jQuery('#add_new_tag').on('click', function(){
@@ -211,7 +244,6 @@ jQuery(document).on('ready', function() {
 		});
 	});
 	jQuery(document).on('click', '.wt-checkbox, .wt-filtertag', function(e){
-		console.log('e', e.currentTarget.classList[0]);
 		var cities = Array.from(document.getElementsByClassName('city'));
 		var subcategories = Array.from(document.getElementsByClassName('subcategory'));
 		var city_list = [];
@@ -247,8 +279,7 @@ jQuery(document).on('ready', function() {
 			success: function(data) {
 				$('#workers').html(data.html);
 				$('#length').html(data.length);
-			},
-			
+			},			
 		});
 	});
 	// Preview photo ============================

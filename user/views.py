@@ -190,6 +190,8 @@ class WorkerList(ListView):
         categories = CategoryJob.objects.all()
         context['regions'] = regions
         context['categories'] = categories
+        context = paginate(self.get_queryset(), 2, self.request, context,
+                           var_name='workers')
         return context
 
     def get_queryset(self):
@@ -210,12 +212,6 @@ class WorkerDetail(DetailView):
         responses = self.object.responses.all().select_related().prefetch_related('replies',
                                                                                   'replies__author')\
                                                 .order_by('created')
-        tags = self.object.skilltags.all().only('name')
-        q = Q()
-        for tag in tags:
-            q |= Q(name__icontains = tag)
-        similar_tags = SkillTag.objects.filter(q)
-        print(('similar', similar_tags))
         context = paginate(responses, 2, self.request, context, 'responses')
         return context
 
@@ -239,6 +235,8 @@ class WorkerListBySubCategory(ListView):
         context['regions'] = regions
         context['categories'] = categories
         context['pk'] = self.kwargs['pk']
+        context = paginate(self.get_queryset(), 2, self.request, context,
+                           var_name='workers')
         return context
 
 
@@ -249,7 +247,7 @@ class WorkerListByTag(ListView):
 
     def get_queryset(self):
         queryset = Worker.objects.prefetch_related('skilltags').select_related('user').filter(
-            is_active=True, skilltags__name__iexact=self.kwargs['tag'])
+            is_active=True, skilltags__name__icontains=self.kwargs['tag'])
         queryset = queryset_orderby_response(queryset)
         return queryset
 
@@ -260,6 +258,8 @@ class WorkerListByTag(ListView):
         context['regions'] = regions
         context['categories'] = categories
         context['tag'] = self.kwargs['tag']
+        context = paginate(self.get_queryset(), 2, self.request, context,
+                           var_name='workers')
         return context
 
 
@@ -278,11 +278,12 @@ def ajax_filter_workers(request):
         subcategories = [int(id) for id in subcategories]
         filters['subcategories__id__in'] = subcategories
     if tag:
-        filters['skilltags__name__exact'] = tag
+        filters['skilltags__name__icontains'] = tag
     if filters:
         queryset = queryset.filter(**filters).distinct()
     queryset = queryset_orderby_response(queryset)
-    data['html'] = render_to_string('includes/worker_list.html', {'workers': queryset})
+    context = paginate(queryset, 1, request, {}, var_name='workers')
+    data['html'] = render_to_string('includes/worker_list.html', context, request)
     data['length'] = queryset.count()
     return JsonResponse(data)
 

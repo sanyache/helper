@@ -270,3 +270,32 @@
         <a href="javascript:void(0);">WordPress</a>
     </div>
 </div>
+<nav class="wt-pagination" id="nav-paginate" data-url="{{ request.build_absolute_uri }}">
+    <ul>
+        {% if page_obj.has_previous %}
+        <li class="wt-prevpage">
+            <a href="javascript:void(0);" 
+               data-page="{{ page_obj.number|add:'-1' }}"
+               class="paginate">
+               <i class="lnr lnr-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        {% for n in page_obj.paginator.page_range %}
+            {% if page_obj.number == n %}
+            <li class="wt-active"><a href="javascript:void(0);">{{ n }}</a></li>
+            {% elif n > page_obj.number|add:'-3' and n < page_obj.number|add:'3' %}
+            <li><a href="javascript:void(0);" data-page="{{ n }}" class="paginate">{{ n }}</a></li>
+            {% endif %}
+        {% endfor %}													
+        {% if page_obj.has_next %}
+        <li class="wt-nextpage">
+            <a href="javascript:void(0);" 
+               data-page="{{ page_obj.number|add:'1' }}"
+               class="paginate">
+               <i class="lnr lnr-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
