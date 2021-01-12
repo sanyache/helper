@@ -57,40 +57,58 @@ jQuery(document).on('ready', function() {
 	hideAllUl();
 	// setStyle();
 	// Switch stars =======================================================
-	function SwitchStars(){
-		var spanlist = document.querySelectorAll('.rating-star');
-		spanlist.forEach(el => {
-			var rating = parseInt($(el).attr('data-rating'));
-			var blank = el.firstElementChild;			
-			if(rating) {
-				for(var i=1; i<=rating; i++){	
-					var clone = blank.cloneNode(true);					
-					clone.hidden = false;
-					el.appendChild(clone);					
-				}
+	function SwitchStars(html){
+		var allStars;
+		if(html){			
+			allStars = html.querySelectorAll('.rating-active');
+		} else {			
+			allStars = document.querySelectorAll('.rating-active');
+		}		
+		allStars.forEach(el => {
+			var rate = $(el).attr('data-rating');
+			rate = parseFloat(rate.replace(',','.'));
+			if(!rate){
+				rate = 0;
 			}
+			el.style.width = `${rate/0.05}%`;
 		});
 	}
 	SwitchStars();
 	// Load More ========================================================
 	$(document).on('click', 'a.load-more',function(event){
-		var link = location.href;
+		var link = $(this).data('url');
 		var num_pages = $(this).data('pages');
 		var page = $(this).data('page');
+		console.log('link', link, num_pages, page);
 		page += 1;
 		$(this).data('page', page);
 		if( page <= num_pages){
 			link =  link+"?page="+ page;
+			if(link.includes('ajax')){
+				link += '&id='+$(this).data('id')+'&filter='+$(this).data('filter');
 				$.ajax({
-				'url': link,
-				'dataType': 'html',
-				'type': 'get',
-				'success': function(data, status, xhr){
-					var html = $(data).find('.items');
-					$('.pages').append(html);
-					SwitchStars();			
-				}
-			});
+					'url': link,
+					'dataType': 'json',
+					'type': 'get',
+					'success': function(data){					
+						$('.items').append(data.html);
+						var pages = $(data.html)[0];
+						SwitchStars();
+						
+					}	
+				});
+			} else {
+				$.ajax({
+					'url': link,
+					'dataType': 'html',
+					'type': 'get',
+					'success': function(data, status, xhr){
+						var html = $(data).find('.items');
+						$('.pages').append(html);
+						SwitchStars(html[0]);			
+					}
+				});
+			}	
 		}
 		if( page == num_pages ){
 		  $(this).hide();
@@ -112,7 +130,8 @@ jQuery(document).on('ready', function() {
 				'type': 'get',
 				'success': function(data){
 					$('#workers').html(data.html);
-					$('html, body').animate({ scrollTop: 0 }, 'fast');								
+					$('html, body').animate({ scrollTop: 0 }, 'fast');
+					SwitchStars();								
 				}
 			});
 		} else {
@@ -124,6 +143,7 @@ jQuery(document).on('ready', function() {
 					var html = $(data).find('.items');
 					$('.pages').html(html);
 					$('html, body').animate({ scrollTop: 0 }, 'fast');
+					SwitchStars();
 				}
 			});
 		}
@@ -235,7 +255,10 @@ jQuery(document).on('ready', function() {
 			url: url,
 			data: {'filter': filter, 'id': id, 'url': url},
 			success: function(data) {
-				$("#response-list").html(data.html);
+				$(".pages").html(data.html);
+				$("#load-more-response").data('url', url);
+				$("#load-more-response").data('id', id);
+				$("#load-more-response").data('filter', filter);
 				SwitchStars();
 			},
 			error: function(error){
@@ -279,6 +302,7 @@ jQuery(document).on('ready', function() {
 			success: function(data) {
 				$('#workers').html(data.html);
 				$('#length').html(data.length);
+				SwitchStars();
 			},			
 		});
 	});

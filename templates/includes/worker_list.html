@@ -24,9 +24,10 @@
             </ul>
         </div>
         <div class="wt-rightarea">
-            <span class="wt-starsvtwo rating-star" data-rating="{{ worker.rating }}">                
+            <!-- <span class="wt-starsvtwo rating-star" data-rating="{{ worker.rating }}">                
                 <i hidden class="fa fa-star fill"></i>
-            </span>
+            </span> -->
+            <div class="rate-star"><div class="rating-active" data-rating="{{ worker.rating }}"></div></div>
             <span class="wt-starcontent">{{ worker.rating| floatformat:2}} <em>Відгуків: {{ worker.feedback }}</em></span>
         </div>
     </div>

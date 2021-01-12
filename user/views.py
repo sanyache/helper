@@ -292,7 +292,7 @@ def create_response(request, pk):
     if request.method == 'POST':
         worker = Worker.objects.get(id=pk)
         user = request.user
-        rating = request.POST.get('rating')
+        rating = int(request.POST.get('rating'))
         description = request.POST.get('description')
         if rating or description:
             Response.objects.create(author=user, worker=worker, description=description,
@@ -312,7 +312,8 @@ class DeleteResponse(DeleteView):
 
 def ajax_filter_response(request):
     data = dict()
-    id = request.GET.get('id')
+    context = dict()
+    id = int(request.GET.get('id'))
     filter = request.GET.get('filter')
     responses = Worker.objects.get(id=id).responses.all().select_related('author')
     if filter == 'fresh':
@@ -323,7 +324,8 @@ def ajax_filter_response(request):
         responses = responses.order_by('-rating')
     if filter == 'lowrate':
         responses = responses.order_by('rating')
-    data['html'] = render_to_string('includes/response_list.html', {'responses': responses})
+    context = paginate(responses, 3, request, context, 'responses')
+    data['html'] = render_to_string('includes/response_list.html', context)
     return JsonResponse(data)
 
 
@@ -335,6 +337,6 @@ def create_reply(request):
         text = request.POST.get('description')
         response = Response.objects.get(id=id)
         reply =  Reply.objects.create(response=response, author=author,
-                                      text=text).select_related('response')
+                                      text=text)
         data['reply'] = render_to_string('includes/replies_list.html', {'reply': reply})
     return JsonResponse(data)

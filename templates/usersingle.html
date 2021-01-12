@@ -35,8 +35,7 @@
 										<h3><i class="fa fa-check-circle"></i>   {{ worker.user.get_full_name }}</h3>
 										<span>{{ worker.rating| floatformat:2}}<a class="javascript:void(0);">{{ worker.feedback }}</a>
 											 <br>Зареєстрований {{ worker.created}}
-											 <br><a href="javascript:void(0);">{{ worker.user.email }}</a> 
-											 <a href="javascript:void(0);" class="wt-reportuser">Report User</a></span>
+											 <br><a href="javascript:void(0);">{{ worker.user.email }}</a> 											
 									</div>
 								</div>
 							</div>
@@ -97,7 +96,7 @@
 				<div id="wt-twocolumns" class="wt-twocolumns wt-haslayout">
 					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
 						<div class="wt-usersingle">
-							<div class="wt-clientfeedback pages">
+							<div class="wt-clientfeedback">
 								<div class="wt-usertitle wt-titlewithselect">
 									<h2>Відгуки</h2>
 									<div class="form-group">
@@ -114,20 +113,13 @@
 										</span>
 									</div>
 								</div>
-								<div id="response-list" class="items"> 
-									{% include 'includes/response_list.html' %}
+								<div class="">
+									<div  class=""> 
+										{% include 'includes/response_list.html' %}
+									</div>
 								</div>
-								{% if responses.has_next %}							
-								<div class="wt-btnarea more-btn">
-									<a href="javascript:void(0);" 
-									   class="wt-btn load-more"
-									   data-pages="{{ paginator.num_pages }}"
-									   data-page="{{ page_obj.number }}">
-									   Завантажити ще
-									</a>
-								</div>
-								{% endif %}
 							</div>
+							
 							<div class="wt-craftedprojects">
 								<div class="wt-usertitle">
 									<h2>Портфоліо</h2>
@@ -203,16 +195,50 @@
 										<fieldset>
 											{% csrf_token %}
 											<div class="form-group">
-												<span class="wt-select">
+												<div class="simple-rating">
+													<div class="rating-items">
+														<input type="radio" 
+															   value="5" 
+															   name="rating" 
+															   id="rating-item__5"
+															   class="rating-item">
+														<label for="rating-item__5" class="rating-label"></label>
+														<input type="radio" 
+															   value="4" 
+															   name="rating" 
+															   id="rating-item__4"
+															   class="rating-item">
+														<label for="rating-item__4" class="rating-label"></label>
+														<input type="radio" 
+															   value="3" 
+															   name="rating" 
+															   id="rating-item__3"
+															   class="rating-item">
+														<label for="rating-item__3" class="rating-label"></label>
+														<input type="radio" 
+															   value="2" 
+															   name="rating" 
+															   id="rating-item__2"
+															   class="rating-item">
+														<label for="rating-item__2" class="rating-label"></label>
+														<input type="radio" 
+															   value="1" 
+															   name="rating" 
+															   id="rating-item__1"
+															   class="rating-item">
+														<label for="rating-item__1" class="rating-label"></label>													
+													</div>
+												</div>
+												<!-- <span class="wt-select">
 													<select id="select-star" name="rating">
 														<option value="">Оцініть роботу</option>
-														<option value="5" >5</i></option>
+														<option value="5">5</i></option>
 														<option value="4">4</option>
 														<option value="3">3</option>
 														<option value="2">2</option>
 														<option value="1">1</option>
 													</select>
-												</span>
+												</span> -->
 											</div>
 											<div class="form-group">
 												<textarea class="form-control" name="description" placeholder="Напишіть відгук"></textarea>
