@@ -3505,8 +3505,11 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-userlisting-breadcrumb li a{
 	display: block;
 	color: #767676;
-	font-size: 13px;
+	font-size: 16px;
 	line-height: inherit;
+}
+.wt-userlisting-breadcrumb li a:hover{
+	color: #55acee;
 }
 .wt-userlisting-breadcrumb li + li{border-left: 1px solid #ddd;}
 .wt-userlistinghold .wt-description p{

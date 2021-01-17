@@ -255,7 +255,7 @@ jQuery(document).on('ready', function() {
 			url: url,
 			data: {'filter': filter, 'id': id, 'url': url},
 			success: function(data) {
-				$(".pages").html(data.html);
+				$(".pages-filter").html(data.html);
 				$("#load-more-response").data('url', url);
 				$("#load-more-response").data('id', id);
 				$("#load-more-response").data('filter', filter);
@@ -389,6 +389,8 @@ jQuery(document).on('ready', function() {
 			});
 		}	
 	});
+	// Typeahead ===========================================================
+	
 	/*OPEN CLOSE */
 	jQuery('#wt-loginbtn, .wt-loginheader a').on('click', function(event){
 		event.preventDefault();

@@ -18,15 +18,12 @@
                 <a href="{% url 'worker_detail' worker.id %}"><h3>{{ worker.user.get_full_name }}</h3></a>
             </div>
             <ul class="wt-userlisting-breadcrumb">
-                <li><span><i class="far fa-money-bill-alt"></i> $44.00 / hr</span></li>
-                <li><span><img src="images/flag/img-02.png" alt="img description">  United States</span></li>
-                <li><a href="javascript:void(0);" class="wt-clicksave"><i class="fa fa-heart"></i> Save</a></li>
+                {% for sub in worker.subcategories.all %} <li><a href="{% url 'worker_by_subcategory' sub.id %}">{{ sub }}</a></li>{% endfor %}
+                <!-- <li><span><img src="images/flag/img-02.png" alt="img description">  United States</span></li>
+                <li><a href="javascript:void(0);" class="wt-clicksave"><i class="fa fa-heart"></i> Save</a></li> -->
             </ul>
         </div>
-        <div class="wt-rightarea">
-            <!-- <span class="wt-starsvtwo rating-star" data-rating="{{ worker.rating }}">                
-                <i hidden class="fa fa-star fill"></i>
-            </span> -->
+        <div class="wt-rightarea">            
             <div class="rate-star"><div class="rating-active" data-rating="{{ worker.rating }}"></div></div>
             <span class="wt-starcontent">{{ worker.rating| floatformat:2}} <em>Відгуків: {{ worker.feedback }}</em></span>
         </div>

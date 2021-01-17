@@ -23,4 +23,5 @@ urlpatterns = [
     path('delete_response/<int:pk>', DeleteResponse.as_view(), name='delete_response'),
     path('ajax/filter_response', ajax_filter_response, name='filter_response'),
     path('create_reply', create_reply, name='create_reply'),
+    path('search_tag_typeahead', SearchTagTypeahead.as_view(), name='search_tag_typeahead')
 ]

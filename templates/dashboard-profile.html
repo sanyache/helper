@@ -3,6 +3,7 @@
 {% block extra_css %}
 	<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 	<link rel="stylesheet" href="{% static 'css/dbresponsive.css' %}">
+	<link rel="stylesheet" href="{% static 'css/typeahead.css' %}">
 {% endblock extra_css %}
 {% block content %}
 
@@ -147,6 +148,9 @@
 								<div class="wt-dashboardbox wt-dashboardtabsholder">
 									<div class="wt-dashboardboxtitle">
 										<h2>Мій профіль</h2>
+										{% if request.user.worker %}
+										<a href="{% url 'worker_detail' request.user.worker.id %}">Переглянути профіль</a>
+										{% endif %}
 									</div>
 									<div class="wt-dashboardtabs">
 										<ul class="wt-tabstitle nav navbar-nav">
@@ -279,7 +283,7 @@
 														<li  hidden>
 															<div class="wt-accordioninnertitle">
 																<div class="form-group form-group-half">
-																	<input type="text" name="tag-list" class="form-control" placeholder="Вкажіть ключеве слово">
+																	<input type="text" name="tag-list" class="form-control typeahead" placeholder="Вкажіть ключеве слово">
 																</div>
 																<div class="wt-rightarea">
 																	<a href="javascript:void(0);" class="wt-deleteinfo deletetag"><i class="lnr lnr-trash"></i></a>
@@ -434,6 +438,6 @@
 			}
 			menu_icon.addEventListener('click', addClassFunThree);
 		</script>
-		<script src="{% static 'js/jquery.sortable.js' %}"></script>
+		<script src="{% static 'js/jquery.sortable.js' %}"></script>					
 	{% endblock extra_js %}
 {% endblock content %}

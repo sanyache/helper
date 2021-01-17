@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
 from django.db.models import Avg, Count, Sum, FloatField, Func, Q
 from django.db.models.functions import Cast
@@ -11,6 +12,8 @@ from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from .utils import paginate
 from job.models import CategoryJob
+
+import json
 
 
 class IsNull(Func):
@@ -51,16 +54,13 @@ def worker_account(request):
             photos = WorkerGallery.objects.filter(worker=worker)
         else:
             worker_form = WorkerForm()
-        return render(request, 'dashboard-profile.html',
-                      locals())
+        return render(request, 'dashboard-profile.html', locals())
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
         worker, created = Worker.objects.get_or_create(user=request.user)
         worker_form = WorkerForm(request.POST, request.FILES, instance=worker)
 
         if user_form.is_valid() and worker_form.is_valid():
-            print('user',user_form.cleaned_data)
-            print('worker',worker_form.cleaned_data.get('title_image'))
             user_form.save()
             # worker, created = Worker.objects.get_or_create(user=user, )
             worker_form.save()
@@ -68,8 +68,6 @@ def worker_account(request):
             # worker.save()
             # worker_form.save_m2m()
         else:
-            print('u', user_form.cleaned_data)
-            print('w', worker_form.cleaned_data)
             messages.error(request,
                            'При оновленні даних відбулася помилка. Перевірте чи заповненні всі поля'
                            )
@@ -180,7 +178,8 @@ def queryset_orderby_response(queryset):
 class WorkerList(ListView):
 
     model = Worker
-    queryset = Worker.objects.filter(is_active=True).prefetch_related('skilltags').select_related()
+    queryset = Worker.objects.filter(is_active=True).prefetch_related('skilltags', 'subcategories'
+                                                                      ).select_related()
     context_object_name = 'workers'
     template_name = 'userlisting.html'
 
@@ -213,6 +212,8 @@ class WorkerDetail(DetailView):
                                                                                   'replies__author')\
                                                 .order_by('created')
         context = paginate(responses, 2, self.request, context, 'responses')
+        self.object.views += 1
+        self.object.save()
         return context
 
 
@@ -224,7 +225,8 @@ class WorkerListBySubCategory(ListView):
 
     def get_queryset(self):
         queryset = Worker.objects.filter(is_active=True, subcategories__id=self.kwargs['pk'])\
-                                        .prefetch_related('skilltags').select_related('user')
+                                        .prefetch_related('skilltags', 'subcategories')\
+                                        .select_related('user')
         queryset = queryset_orderby_response(queryset)
         return queryset
 
@@ -246,7 +248,7 @@ class WorkerListByTag(ListView):
     template_name = 'userlisting.html'
 
     def get_queryset(self):
-        queryset = Worker.objects.prefetch_related('skilltags').select_related('user').filter(
+        queryset = Worker.objects.prefetch_related('skilltags', 'subcategories').select_related('user').filter(
             is_active=True, skilltags__name__icontains=self.kwargs['tag'])
         queryset = queryset_orderby_response(queryset)
         return queryset
@@ -267,7 +269,7 @@ def ajax_filter_workers(request):
     data = dict()
     filters = dict()
     queryset = Worker.objects.filter(is_active=True).prefetch_related(
-        'skilltags').select_related('user')
+        'skilltags', 'subcategories').select_related('user')
     cities = request.GET.getlist('cities[]')
     tag = request.GET.get('tag')
     subcategories = request.GET.getlist('subcategories[]')
@@ -340,3 +342,16 @@ def create_reply(request):
                                       text=text)
         data['reply'] = render_to_string('includes/replies_list.html', {'reply': reply})
     return JsonResponse(data)
+
+
+class SearchTagTypeahead(View):
+
+    def get(self, request):
+        q = request.GET.get('q', '')
+        skills = SkillTag.objects.filter(name__icontains= q)
+        skill_list = []
+        for skill in skills:
+            new = {'q': skill.name}
+            skill_list.append(new)
+        return HttpResponse(json.dumps(skill_list), content_type="application/json")
+

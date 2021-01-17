@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block extra_meta %}
+   <meta property="og:title" content="{{  worker.user.get_full_name }}">
+	<meta property="og:description" content="{{ worker.describe }}">
+	{% if worker.title_image %}
+	<meta property="og:image" content="{{ worker.image_detail_avatar.url  }}">
+	{% else %}
+	<meta property="og:image" content="{% static 'images/default.jpg' %}">
+	{% endif %}
+	<meta property="og:url" content="{% url 'worker_detail' worker.id %}">
+	<meta property="og:site_name" content="Work helper">
+{% endblock extra_meta %}
 {% block extra_css %}
 <link href="{% static 'css/lightbox.min.css' %}" rel="stylesheet" type="text/css" />
 <script src="{% static 'js/lightbox-plus-jquery.js' %}"></script>
@@ -27,12 +38,17 @@
 							<div class="row">
 								<div class="wt-userprofile">
 									<figure>
+										{% if worker.title_image %}
 										<img src="{{ worker.image_detail_avatar.url }}" alt="img description">
+										{% else %}
+										<img src="{% static 'images/default.jpg' %}" style="width: 225px; height: 225px;">
+										{% endif %}
 										<div class="wt-userdropdown wt-online">
 										</div>
 									</figure>
 									<div class="wt-title">
 										<h3><i class="fa fa-check-circle"></i>   {{ worker.user.get_full_name }}</h3>
+										<p>Переглядів профілю {{ worker.views }}</p>
 										<span>{{ worker.rating| floatformat:2}}<a class="javascript:void(0);">{{ worker.feedback }}</a>
 											 <br>Зареєстрований {{ worker.created}}
 											 <br><a href="javascript:void(0);">{{ worker.user.email }}</a> 											
@@ -59,30 +75,7 @@
 										<a href="{% url 'worker_by_tag' tag.name %}">{{ tag.name }}</a>
 										{% endfor %}										
 									</div>
-								</div>
-								<!-- <div id="wt-statistics" class="wt-statistics wt-profilecounter">
-									<div class="wt-statisticcontent wt-countercolor1">
-										<h3 data-from="0" data-to="03" data-speed="800" data-refresh-interval="03">03</h3>
-										<h4>Ongoing <br>Projects</h4>
-									</div>
-									<div class="wt-statisticcontent wt-countercolor2">
-										<h3 data-from="0" data-to="1503" data-speed="8000" data-refresh-interval="100">1503</h3>
-										<h4>Completed <br>Projects</h4>
-									</div>
-									<div class="wt-statisticcontent wt-countercolor4">
-										<h3 data-from="0" data-to="02" data-speed="800" data-refresh-interval="02">02</h3>
-										<h4>Cancelled <br>Projects</h4>
-									</div>
-									<div class="wt-statisticcontent wt-countercolor3">
-										<h3 data-from="0" data-to="25" data-speed="8000" data-refresh-interval="100">25</h3>
-										<em>k</em>
-										<h4>Served <br>Hours</h4>
-									</div>
-									<div class="wt-description">
-										<p>* Adpsicing elit sed do eiusmod tempor incididunt ut labore et dolore.</p>
-										<a href="javascript:void(0);" class="wt-btn" data-toggle="modal" data-target="#reviewermodal">Send Offer</a>
-									</div>
-								</div> -->
+								</div>								
 							</div>
 						</div>
 					</div>
@@ -113,7 +106,7 @@
 										</span>
 									</div>
 								</div>
-								<div class="">
+								<div class="pages-filter">
 									<div  class=""> 
 										{% include 'includes/response_list.html' %}
 									</div>
@@ -153,33 +146,14 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="wt-widget">
-								<div class="wt-widgettitle">
-									<h2>Similar Freelancers</h2>
-								</div>
-								<div class="wt-widgetcontent">
-									<div class="wt-widgettag wt-widgettagvtwo">
-										<a href="javascript:void(0);">PHP Developer</a>
-										<a href="javascript:void(0);">PHP</a>
-										<a href="javascript:void(0);">My SQL</a>
-										<a href="javascript:void(0);">Business</a>
-										<a href="javascript:void(0);">Website Development</a>
-										<a href="javascript:void(0);">Collaboration</a>
-										<a href="javascript:void(0);">Decent</a>
-									</div>
-								</div>
-							</div>
+							</div>							
 							<div class="wt-widget wt-sharejob">
 								<div class="wt-widgettitle">
-									<h2>Share This User</h2>
+									<h2>Поширити</h2>
 								</div>
 								<div class="wt-widgetcontent">
 									<ul class="wt-socialiconssimple">
-										<li class="wt-facebook"><a href="javascript:void(0);"><i class="fab fa-facebook-f"></i>Share on Facebook</a></li>
-										<li class="wt-twitter"><a href="javascript:void(0);"><i class="fab fa-twitter"></i>Share on Twitter</a></li>
-										<li class="wt-linkedin"><a href="javascript:void(0);"><i class="fas fa-star"></i>Share on Linkedin</a></li>
-										<li class="wt-googleplus"><a href="javascript:void(0);"><i class="fab fa-google-plus-g"></i>Share on Google Plus</a></li>
+										<li class="wt-facebook"><a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}"><i class="fab fa-facebook-f"></i>Через Facebook</a></li>
 									</ul>
 								</div>
 							</div>
@@ -228,17 +202,7 @@
 															   class="rating-item">
 														<label for="rating-item__1" class="rating-label"></label>													
 													</div>
-												</div>
-												<!-- <span class="wt-select">
-													<select id="select-star" name="rating">
-														<option value="">Оцініть роботу</option>
-														<option value="5">5</i></option>
-														<option value="4">4</option>
-														<option value="3">3</option>
-														<option value="2">2</option>
-														<option value="1">1</option>
-													</select>
-												</span> -->
+												</div>												
 											</div>
 											<div class="form-group">
 												<textarea class="form-control" name="description" placeholder="Напишіть відгук"></textarea>
@@ -250,7 +214,7 @@
 									</form>
 								</div>
 								{% else %}
-								<h3>Зареєструйтеся</h3>
+								<h3>Зареєструйтеся, щоб залишити відгук</h3>
 								{% endif %}
 							</div>
 						</aside>
