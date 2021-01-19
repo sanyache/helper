@@ -1803,6 +1803,9 @@ body.wt-login .wt-userlogedin{display: block;}
 	width: 100%;
 	display: block;
 }
+.wt-mobileimg img{
+	padding-top: 60px;
+}
 .wt-experienceholder{
 	width: 100%;
 	float: left;

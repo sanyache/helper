@@ -20,9 +20,9 @@
                                             <a href="{% url 'home' %}">Головна</a>                                            
                                         </li>
                                         <li class="nav-item">
-                                            <a href="howitworks.html">How It Works</a>
+                                            <a href="{% url 'howitworks' %}">Як це працює</a>
                                         </li>
-                                        <li class="menu-item-has-children page_item_has_children">
+                                        <!-- <li class="menu-item-has-children page_item_has_children">
                                             <a href="javascript:void(0);">Browse Jobs</a>
                                             <ul class="sub-menu">
                                                 <li>
@@ -35,7 +35,7 @@
                                                     <a href="jobproposal.html">Job Proposal</a>
                                                 </li>
                                             </ul>
-                                        </li>
+                                        </li> -->
                                         <li class="menu-item-has-children page_item_has_children">
                                             <a href="javascript:void(0);">Майстри</a>
                                             <ul class="sub-menu">
@@ -60,76 +60,12 @@
                                     <h3>{{ request.user.username }}</h3>
                                 </div>
                                 <nav class="wt-usernav">
-                                    <ul>
-                                        <li class="menu-item-has-children page_item_has_children">
-                                            <a href="javascript:void(0);">
-                                                <span>Insights</span>
-                                            </a>
-                                            <ul class="sub-menu children">
-                                                <li><a href="dashboard-insights.html">Insights</a></li>
-                                                <li><a href="dashboard-insightsuser.html">Insights User</a></li>
-                                            </ul>
-                                        </li>
+                                    <ul>                                        
                                         <li>
                                             <a href="{% url 'worker_account' %}">
-                                                <span>My Profile</span>
+                                                <span>Мій профіль</span>
                                             </a>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="javascript:void(0);">
-                                                <span>All Jobs</span>
-                                            </a>
-                                            <ul class="sub-menu">
-                                                <li><a href="dashboard-completejobs.html">Completed Jobs</a></li>
-                                                <li><a href="dashboard-canceljobs.html">Cancelled Jobs</a></li>
-                                                <li><a href="dashboard-ongoingjob.html">Ongoing Jobs</a></li>
-                                                <li><a href="dashboard-ongoingsingle.html">Ongoing Single</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-managejobs.html">
-                                                <span>Manage Jobs</span>
-                                            </a>
-                                        </li>
-                                        <li class="wt-notificationicon menu-item-has-children">
-                                            <a href="javascript:void(0);">
-                                                <span>Messages</span>
-                                            </a>
-                                            <ul class="sub-menu">
-                                                <li><a href="dashboard-messages.html">Messages</a></li>
-                                                <li><a href="dashboard-messages2.html">Messages V 2</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-saveitems.html">
-                                                <span>My Saved Items</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-invocies.html">
-                                                <span>Invoices</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-category.html">
-                                                <span>Category</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-packages.html">
-                                                <span>Packages</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-proposals.html">
-                                                <span>Proposals</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="dashboard-accountsettings.html">
-                                                <span>Account Settings</span>
-                                            </a>
-                                        </li>
+                                        </li>                                        
                                         <li>
                                             <a href="{% url 'password_reset' %}">
                                                 <span>Змінити пароль</span>

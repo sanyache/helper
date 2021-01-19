@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+		<!--Inner Home Banner Start-->
+		<div class="wt-haslayout wt-innerbannerholder">
+			<div class="container">
+				<div class="row justify-content-md-center">
+					<div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
+						<div class="wt-innerbannercontent">
+							<div class="wt-title"><h2>Як це працює?</h2></div>
+							<ol class="wt-breadcrumb">
+								<li><a href="{% url 'home' %}">Головна</a></li>
+								<li class="wt-active">Як це працює</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Inner Home End-->
+		<!--Main Start-->
+		<main id="wt-main" class="wt-main wt-haslayout wt-innerbgcolor">
+			<!--Categories Start-->
+			<div class="wt-haslayout wt-main-section">
+				<div class="wt-contentwrappers">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
+								<div class="wt-howitwork-hold wt-bgwhite wt-haslayout">
+									<ul class="wt-navarticletab wt-navarticletabvtwo nav navbar-nav">
+										<li class="nav-item">
+											<a class="active" id="all-tab" data-toggle="tab" href="#forhiring">Для замовників</a>
+										</li>
+										<li class="nav-item">
+											<a id="business-tab" data-toggle="tab" href="#forfreelancing">Для майстрів</a>
+										</li>										
+									</ul>
+									<div class="tab-content wt-haslayout">
+										<div class="wt-contentarticle tab-pane active fade show" id="forhiring">
+											<div class="row">
+												<div class="wt-starthiringhold wt-innerspace wt-haslayout">
+													<div class="col-12 col-sm-12 col-md-12 col-lg-7 float-left">
+														<div class="wt-starthiringcontent">
+															<div class="wt-sectionhead">
+																<div class="wt-sectiontitle">
+																	<h2>Як знайти майстра</h2>
+																	<span>який вам підходить?</span>
+																</div>
+																<div class="wt-description">
+																	<p></p>
+																</div>
+															</div>
+															<ul class="wt-accordionhold accordion">
+																<li>
+																	<div class="wt-accordiontitle collapsed" id="headingOne" data-toggle="collapse" data-target="#collapseOne">
+																		<span>Як обрати майстра?</span>
+																	</div>
+																	<div class="wt-accordiondetails collapse show" id="collapseOne" aria-labelledby="headingOne">
+																		<div class="wt-title">
+																			<h3>Пошук майстра</h3>
+																		</div>
+																		<div class="wt-description">
+																			<p>Для пошуку майстра виберіть категорію, а в ній підкатегорію. Ви можете відфільтрувати майстрів за містом та за підкатегорі. Майстри
+																				відсортовані в залежності від рейтингу.
+																			</p>
+																		</div>																		
+																	</div>
+																</li>
+																<li>
+																	<div class="wt-accordiontitle collapsed" id="headingtwo" data-toggle="collapse" data-target="#collapsetwo">
+																		<span>Як визначається рейтинг?</span>
+																	</div>
+																	<div class="wt-accordiondetails collapse" id="collapsetwo" aria-labelledby="headingtwo">
+																		<div class="wt-title">
+																			<h3>Рейтинг майстра</h3>
+																		</div>
+																		<div class="wt-description">
+																			<p>
+																				Рейтинг майстра визначається як середнє арифметичне балів виставлених у відгуках. А сортування відбувається
+																			    за формулою, яка враховує рейтинг та кількості відгуків. 
+																			</p>
+																		</div>																		
+																	</div>
+																</li>
+																<li>
+																	<div class="wt-accordiontitle collapsed" id="headingthreea" data-toggle="collapse" data-target="#collapsethree">
+																		<span>Як і навіщо залишати відгук?</span>
+																	</div>
+																	<div class="wt-accordiondetails collapse" id="collapsethree" aria-labelledby="headingthreea">
+																		<div class="wt-title">
+																			<h3>Залишити відгук</h3>
+																		</div>
+																		<div class="wt-description">
+																			<p>
+																				Залишаючи відгук ви полегшуєте іншим користувачам пошук майстра, демонструючи його
+																				 кваліфікацію. Щоб залишити відгук зареєструйтеся на сайті( можете використати свій акаунт у Facebook 
+																				 чи Google ). Ви зможете в профілі майстра залишити коментар та виставити зірковий бал за 
+																				 виконану роботу. Також ви можете видалити свій коментар, якщо змінили свою думку. Коментарів можна залишати 
+																				 дукілька. 
+																			</p>
+																		</div>																		
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-12 col-sm-12 col-md-12 col-lg-5 float-right">
+														<div class="wt-howtoworkimg">
+															<figure>
+																<img src="{% static 'images/work/img-01.jpeg' %}" alt="img description">
+															</figure>
+														</div>
+													</div>
+												</div>												
+											</div>
+										</div>
+										<div class="wt-contentarticle tab-pane fade" id="forfreelancing">
+											<div class="row">
+												<div class="wt-starthiringhold wt-innerspace wt-haslayout">
+													<div class="col-12 col-sm-12 col-md-12 col-lg-7 float-right">
+														<div class="wt-starthiringcontent">
+															<div class="wt-sectionhead">
+																<div class="wt-sectiontitle">
+																	<h2>Як створити свій профіль?</h2>
+																	<span>Розміщення профілю на сайті</span>
+																</div>
+																<div class="wt-description">
+																	<p>Dotem eiusmod tempor incune utnaem labore etdolore maigna aliqua eniina ilukita ylokem lokateise ination voluptate velite esse cillum dolore eu fugnulla pariatur lokaim urianewce animid learn <a href="javascript:void(0);">more</a></p>
+																</div>
+															</div>
+															<ul class="wt-accordionhold accordion">
+																<li>
+																	<div class="wt-accordiontitle collapsed" id="headingOneq" data-toggle="collapse" data-target="#collapseOneq">
+																		<span>Як створити акаунт?</span>
+																	</div>
+																	<div class="wt-accordiondetails collapse" id="collapseOneq" aria-labelledby="headingOneq">
+																		<div class="wt-title">
+																			<h3>Створення акаунту</h3>
+																		</div>
+																		<div class="wt-description">
+																			<p>
+																				Щоб створити акаунт, зареєструйтеся на сайті(можете використати ваш акаунт на Facebook чи Google).
+																				Зайдіть на сайт під своїм логіном і перейдіть в меню, де висвітиться ваш логін, в Мій профіль. 
+																			</p>
+																		</div>																		
+																	</div>
+																</li>
+																<li>
+																	<div class="wt-accordiontitle collapsed" id="headingtwoq" data-toggle="collapse" data-target="#collapsetwoq">
+																		<span>Як заповнити профіль?</span>
+																	</div>
+																	<div class="wt-accordiondetails collapse" id="collapsetwoq" aria-labelledby="headingtwoq">
+																		<div class="wt-title">
+																			<h3>Заповнення профілю</h3>
+																		</div>
+																		<div class="wt-description">
+																			<p>
+																				Заповніть поля користуючись підказками, додайте фото до портфолі (розмір фото не повинен перефищувати 2 Мб).
+																				В тегаг вашої діяльності додайте ключові види вашої діяльності. Якщо схожі вже існують, то додайте їх.
+																			</p>
+																		</div>																		
+																	</div>
+																</li>
+																<li>
+																	<div class="wt-accordiontitle collapsed" id="headingthreeq" data-toggle="collapse" data-target="#collapsethreeq">
+																		<span>Як вимкнути профіль?</span>
+																	</div>
+																	<div class="wt-accordiondetails collapse" id="collapsethreeq" aria-labelledby="headingthreeq">
+																		<div class="wt-title">
+																			<h3>Вимкнути профіль</h3>
+																		</div>
+																		<div class="wt-description">
+																			<p>
+																				Якщо ви бажаєте тимчасово вимкнути профіль, щоб він не відображувався в переліку майстрів,
+																				 в Мій профіль -> Вимкнути профіль перемість тумблер вліво. Перемістивши тумблер вправо, ви зможете 
+																				 знову зробити доступним для пошуку.
+																			</p>
+																		</div>																		
+																	</div>
+																</li>
+															</ul>
+														</div>
+													</div>
+													<div class="col-12 col-sm-12 col-md-12 col-lg-5 float-left">
+														<div class="wt-howtoworkimg">
+															<figure>
+																<img src="{% static 'images/work/img-02.jpeg' %}" alt="img description">
+															</figure>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Limitless Experience End-->
+		</main>
+		<!--Main End-->
+{% endblock content %}	

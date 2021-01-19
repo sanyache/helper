@@ -195,6 +195,16 @@ class WorkerList(ListView):
 
     def get_queryset(self):
         queryset = self.queryset
+        full_name = self.request.GET.get('fullname')
+        if full_name:
+            full_name = full_name.split(' ')
+            if len(full_name) == 2:
+                queryset = queryset.filter(Q(user__last_name__icontains=full_name[0]) &
+                                           Q(user__first_name__icontains=full_name[1]) |
+                                           Q(user__last_name__icontains=full_name[1]) &
+                                           Q(user__first_name__icontains=full_name[0]))
+            if len(full_name) == 1:
+                queryset = queryset.filter(user__last_name__icontains=full_name[0])
         queryset = queryset_orderby_response(queryset)
         return queryset
 
