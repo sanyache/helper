@@ -7,17 +7,31 @@ from django.core.files.storage import FileSystemStorage
 from django.views import View
 from django.views.generic import CreateView, DeleteView, ListView, DetailView
 from django.db.models import Avg, Count, Sum, FloatField, Func, Q
-from django.db.models.functions import Cast
 from .forms import SignUpForm, WorkerForm, UserForm
 from .models import *
 from .utils import paginate
 from job.models import CategoryJob
 
 import json
+import requests
 
 
 class IsNull(Func):
     template = '%(expressions)s IS NULL'
+
+
+# def get_user_city(request):
+#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#     if x_forwarded_for:
+#         ip = x_forwarded_for.split(',')[0]
+#     else:
+#         ip = request.META.get('REMOTE_ADDR')
+#     ip = '195.170.179.163'
+#     url = 'https://api.ipgeolocationapi.com/geolocate/' + ip
+#        # 'http://ipwhois.app/json/' + ip + '?lang=ru'
+#     r = requests.get(url)
+#     print('ip', url, r.json())
+#     return ip
 
 
 # Create your views here.
@@ -327,15 +341,16 @@ def ajax_filter_response(request):
     context = dict()
     id = int(request.GET.get('id'))
     filter = request.GET.get('filter')
-    responses = Worker.objects.get(id=id).responses.all().select_related('author')
+    responses = Worker.objects.get(id=id).responses.all().select_related('author')\
+        .annotate(rating_isnull=IsNull('rating'))
     if filter == 'fresh':
         responses = responses.order_by('-created')
     if filter == 'old':
         responses = responses.order_by('created')
     if filter == 'highrate':
-        responses = responses.order_by('-rating')
+        responses = responses.order_by('rating_isnull', '-rating')
     if filter == 'lowrate':
-        responses = responses.order_by('rating')
+        responses = responses.order_by('rating_isnull', 'rating')
     context = paginate(responses, 3, request, context, 'responses')
     data['html'] = render_to_string('includes/response_list.html', context)
     return JsonResponse(data)

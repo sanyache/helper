@@ -3821,8 +3821,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	width: auto;
 	float: left;
 	padding: 4px;
-	max-width: 130px;
-	margin-right: 20px;
+	max-width: 260px;
 	background: #f7f7f7;
 	border: 1px solid #eff2f5;
 }
@@ -5074,7 +5073,13 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-formpopup fieldset .form-group textarea{height: 200px;}
 .wt-formpopup fieldset .wt-btnarea{margin-top:10px; }
 .wt-hide-form{display: none;}
-
+.wt-codescanicons > span {
+    color: #323232;
+    display: block;
+    font-size: 18px;
+    margin-bottom: 25px;
+	line-height: 25px;
+	text-align: center;
 /*Preloader Style*/
 .preloader-outer {
 	top: 0;

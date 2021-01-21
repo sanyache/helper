@@ -631,9 +631,10 @@ body{background:#f2f3fa;}
 .wt-codescanicons > span{
 	color: #323232;
 	display: block;
-	font-size: 18px;
+	font-size: 20px;
 	margin-bottom:25px; 
-	line-height: 18px;
+	line-height: 25px;
+	text-align: center;
 }
 .wt-codescanicons .wt-socialiconssimple li{
 	float: none;
