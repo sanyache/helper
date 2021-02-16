@@ -37,6 +37,9 @@
 											<li class="nav-item"><a data-toggle="tab" href="#wt-awards">Додати телефони</a></li>
 											<li class="nav-item"><a data-toggle="tab" href="#wt-portfolio">Створити портфоліо</a></li>
 											<li class="nav-item"><a data-toggle="tab" href="#wt-set">Вимкнути профіль</a></li>
+											{% if request.user.worker %}
+											<li class="nav-item"><a data-toggle="tab" href="#wt-delete">Видалити профіль</a></li>
+											{% endif %}
 										</ul>
 									</div>
 									<div class="wt-tabscontent tab-content">
@@ -137,6 +140,7 @@
 											<div class="wt-userexperience wt-tabsinfo">
 												<div class="wt-tabscontenttitle wt-addnew">
 													<h2>Додайте ключові напрямки вашої діяльності</h2>
+													<p>Наприклад для будівельних послуг ключовими словами можуть бути: монтаж, демонтаж,бетон, штукатурка і т.д. </p>
 													<a href="javascript:void(0);" id="add_new_tag">Додати тег</a>
 												</div>
 												<form method="POST" action="{% url 'update_tags' %}">
@@ -209,8 +213,9 @@
 											<div class="wt-addprojectsholder wt-tabsinfo">
 												<div class="wt-tabscontenttitle wt-addnew">
 													<h2>Створіть ваше портфоліо</h2>
-													<p>Додайте не більше 9 фото розмір яких не перевищує 2 Мб</p>
-													<a href="javascript:void(0);" id="add_new_photo">Додати фото</a>
+													<p>Додайте не більше 9 фото розмір яких не перевищує 2 Мб.<br/> Щоб зменьшити розмір можете скористатися 
+														<a href="https://www.imgonline.com.ua/compress-image-size.php">цим ресурсом</a></p>
+													<a href="javascript:void(0);" id="add_new_photo">Додати фото +</a>
 												</div>
 												<form method="POST" action="{% url 'update_photos' %}" enctype="multipart/form-data">
 													{% csrf_token %}				
@@ -218,14 +223,14 @@
 														<ul class="wt-attachfile wt-attachfilevtwo" id="photo_list">
 															{% for photo in photos %}
 															<li data-url="{% url 'delete_photo' photo.id %}">
-																<img src="{{ photo.image.url }}">
-																<span><a href="javascript:void(0);" class="deletePhoto">X</a></span>
+																<img src="{{ photo.image.url }}">																
+																<span><a href="javascript:void(0);" class="deletePhoto">X</a></span>										
 															</li>
 															{% endfor %}
 															<li hidden>																
 																<input type="file" name="portfolio" class="portfolio">
-																<span class="titleImg"><img/></span>																	
-																<a href="javascript:void(0);" class="deletePhoto">X</a>																																
+																<span class="titleImg"><img/></span>																																	
+																<a href="javascript:void(0);" class="deletePhoto">X</a>																																																
 															</li>															
 														</ul>
 													</div>																		
@@ -237,7 +242,7 @@
 											<div class="wt-addprojectsholder wt-tabsinfo">
 												<div class="wt-tabscontenttitle wt-addnew">
 													<h2>Вимкнути профіль</h2>
-													<p>Ви можете тимчасово вимкнути профіль</p>			
+													<p>Ви можете тимчасово вимкнути профіль і він не буде відображатися в результатах пошуку</p>			
 												</div>
 												<form method="POST" action="{% url 'toggle_account' %}">
 													{% csrf_token %}				
@@ -261,7 +266,18 @@
 													<button type="submit" class="wt-btn submit">Ok</button>
 												</form>
 											</div>																		
-										</div>										
+										</div>
+										{% if request.user.worker %}
+										<div class="wt-awardsholder tab-pane fade" id="wt-delete">
+											<div class="wt-addprojectsholder wt-tabsinfo">
+												<div class="wt-tabscontenttitle wt-addnew">
+													<h2>Видалити профіль!</h2>
+													<p>Будьте уважні!!! Ви намагаєтеся видалити власний профіль</p>			
+												</div>												
+												<a href="{% url 'worker_delete' request.user.worker.id%}" class="wt-btn">Видалити</a>												
+											</div>																		
+										</div>
+										{% endif %}										
 									</div>									
 								</div>
 						</div>																			
@@ -273,13 +289,13 @@
 									<img src="{% static 'images/client/olmo.jpeg' %}" alt="img description">
 								</figure>								
 								<div class="wt-codescanicons">
-									<span>Кондиціонери OLMO. Продаж, установка. вул.Братська 65. Магазин 'Ера'</span>									
+									<span>Кондиціонери OLMO. Продаж, установка.м.Олександрія вул.Братська 65. Магазин 'Ера'</span>									
 								</div>
 							</div>
-							<div class="wt-companyad">
+							<!-- <div class="wt-companyad">
 								<figure class="wt-companyadimg"><img src="{% static 'images/add-img.jpg' %}" alt="img descripton"></figure>
 								<span>Advertisement  255px X 255px</span>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</section>

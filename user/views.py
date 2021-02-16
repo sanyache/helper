@@ -76,11 +76,8 @@ def worker_account(request):
 
         if user_form.is_valid() and worker_form.is_valid():
             user_form.save()
-            # worker, created = Worker.objects.get_or_create(user=user, )
             worker_form.save()
             messages.info(request, 'Дані оновлено успішно')
-            # worker.save()
-            # worker_form.save_m2m()
         else:
             messages.error(request,
                            'При оновленні даних відбулася помилка. Перевірте чи заповненні всі поля'
@@ -203,7 +200,7 @@ class WorkerList(ListView):
         categories = CategoryJob.objects.all()
         context['regions'] = regions
         context['categories'] = categories
-        context = paginate(self.get_queryset(), 2, self.request, context,
+        context = paginate(self.get_queryset(), 8, self.request, context,
                            var_name='workers')
         return context
 
@@ -235,10 +232,17 @@ class WorkerDetail(DetailView):
         responses = self.object.responses.all().select_related().prefetch_related('replies',
                                                                                   'replies__author')\
                                                 .order_by('created')
-        context = paginate(responses, 2, self.request, context, 'responses')
+        context = paginate(responses, 4, self.request, context, 'responses')
         self.object.views += 1
         self.object.save()
         return context
+
+
+class WorkerDelete(DeleteView):
+
+    model = Worker
+    template_name = 'worker_confirm_delete.html'
+    success_url = reverse_lazy('home')
 
 
 class WorkerListBySubCategory(ListView):
@@ -261,7 +265,7 @@ class WorkerListBySubCategory(ListView):
         context['regions'] = regions
         context['categories'] = categories
         context['pk'] = self.kwargs['pk']
-        context = paginate(self.get_queryset(), 2, self.request, context,
+        context = paginate(self.get_queryset(), 8, self.request, context,
                            var_name='workers')
         return context
 
@@ -284,7 +288,7 @@ class WorkerListByTag(ListView):
         context['regions'] = regions
         context['categories'] = categories
         context['tag'] = self.kwargs['tag']
-        context = paginate(self.get_queryset(), 2, self.request, context,
+        context = paginate(self.get_queryset(), 8, self.request, context,
                            var_name='workers')
         return context
 
@@ -308,7 +312,7 @@ def ajax_filter_workers(request):
     if filters:
         queryset = queryset.filter(**filters).distinct()
     queryset = queryset_orderby_response(queryset)
-    context = paginate(queryset, 1, request, {}, var_name='workers')
+    context = paginate(queryset, 8, request, {}, var_name='workers')
     data['html'] = render_to_string('includes/worker_list.html', context, request)
     data['length'] = queryset.count()
     return JsonResponse(data)
@@ -351,7 +355,7 @@ def ajax_filter_response(request):
         responses = responses.order_by('rating_isnull', '-rating')
     if filter == 'lowrate':
         responses = responses.order_by('rating_isnull', 'rating')
-    context = paginate(responses, 3, request, context, 'responses')
+    context = paginate(responses, 4, request, context, 'responses')
     data['html'] = render_to_string('includes/response_list.html', context)
     return JsonResponse(data)
 

@@ -94,7 +94,19 @@
 														</fieldset>
 													</form>
 												</div>
-											</div>																						
+											</div>
+											<!--Ads block-->
+											<div class="wt-proposalsr">
+												<div class="tg-authorcodescan tg-authorcodescanvtwo">
+													<figure class="tg-qrcodeimg">
+														<img src="{% static 'images/client/olmo.jpeg' %}" alt="img description">
+													</figure>								
+													<div class="wt-codescanicons">
+														<span>Кондиціонери OLMO. Продаж, установка. вул.Братська 65. Магазин 'Ера'</span>									
+													</div>
+												</div>
+											</div>
+											<!--End Ads block-->																							
 										</aside>
 									</div>
 									<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
@@ -127,36 +139,7 @@
 											<div class="items" id="items">
 												<div id="workers">
 													{% include 'includes/worker_list.html' %}
-												</div>	
-												<!-- <nav class="wt-pagination">
-													<ul>
-														{% if page_obj.has_previous %}
-														<li class="wt-prevpage">
-															<a href="javascript:void(0);" 
-															   data-page="{{ page_obj.number|add:'-1' }}"
-															   class="paginate">
-															   <i class="lnr lnr-chevron-left"></i>
-															</a>
-														</li>
-														{% endif %}
-														{% for n in page_obj.paginator.page_range %}
-															{% if page_obj.number == n %}
-															<li class="wt-active"><a href="javascript:void(0);">{{ n }}</a></li>
-															{% elif n > page_obj.number|add:'-3' and n < page_obj.number|add:'3' %}
-															<li><a href="javascript:void(0);" data-page="{{ n }}" class="paginate">{{ n }}</a></li>
-															{% endif %}
-														{% endfor %}													
-														{% if page_obj.has_next %}
-														<li class="wt-nextpage">
-															<a href="javascript:void(0);" 
-															   data-page="{{ page_obj.number|add:'1' }}"
-															   class="paginate">
-															   <i class="lnr lnr-chevron-right"></i>
-															</a>
-														</li>
-														{% endif %}
-													</ul>
-												</nav> -->
+												</div>													
 											</div>
 										</div>
 									</div>

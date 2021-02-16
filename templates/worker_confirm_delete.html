@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<form action="{% url 'worker_delete' object.id %}" method="post">
+    {% csrf_token %}
+    <h2>
+        Ви дійсно хочете видалити власний профіль {{ object }}"?
+    </h2>
+    <input type="submit" value="Так" name="delete_button" class="btn btn-danger">
+        <a href="{% url 'worker_account' %}" class="btn btn-info">Ні</a>      
+</form>
+<br>
+{% endblock content %}
