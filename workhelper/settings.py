@@ -25,7 +25,6 @@ SECRET_KEY = '8*2%$uik(e#9u4b79!*8^g9nmb^*2dabe4vcot-h^%$!akxf5m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ['*']
 
 # Application definition
 
