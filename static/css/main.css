@@ -1611,6 +1611,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	width: 100%;
 }
 .wt-categorycontent{
+	margin-bottom: 30px;
 	float: left;
 	width: 100%;
 	min-height: 350px;
@@ -1679,7 +1680,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-categorycontent:hover .wt-cattitle h3 a{
 	color: #111;
 }
-.wt-categoryexpl > .float-left:nth-child(n+5){margin-top:30px; }
+/* .wt-categoryexpl{margin-top:30px; } */
 .wt-categoryexpl .wt-btnarea{text-align: center;}
 .wt-categoryslidup{
 	left:0;
