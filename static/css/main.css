@@ -1667,7 +1667,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	padding: 0 20px;
 	position: absolute;
 }
-.wt-categorycontent:hover .wt-cattitle{top:10%;}
+.wt-categorycontent:hover .wt-cattitle{top:4%;}
 .wt-cattitle h3{
 	margin: 40px 0 5px 0;
 	font-size: 22px;
