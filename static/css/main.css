@@ -1678,7 +1678,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	color: #fff;
 }
 .wt-categorycontent:hover .wt-cattitle h3 a{
-	color: #111;
+	color: #111111;	
 }
 /* .wt-categoryexpl{margin-top:30px; } */
 .wt-categoryexpl .wt-btnarea{text-align: center;}
@@ -1699,8 +1699,7 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-categorycontent:hover .wt-categoryslidup{
 	opacity: 1;
-	bottom: 0;
-	bottom: 22%;
+	bottom: 5%;
 	visibility: visible;
 }
 .wt-categoryslidup p{

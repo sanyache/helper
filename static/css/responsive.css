@@ -210,7 +210,7 @@
 	.wt-appicon li figure{width: 150px }
 	.wt-bannerholder .row > div.col-12{display: none;}
 	.wt-categorycontent:hover .wt-cattitle{top: 10%;}
-	.wt-categorycontent:hover .wt-categoryslidup{bottom: 10%;}
+	.wt-categorycontent:hover .wt-categoryslidup{bottom: 5%;}
 	.wt-bannercontent{padding: 100px 0;}
 	.wt-bannerhead{text-align: center;}
 	.wt-videoholder {
@@ -345,7 +345,7 @@
 	.wt-footeraboutus .col-12:nth-child(n+2){margin-top:20px; }
 	.wt-categoryexpl > .float-left:nth-child(n+2){margin-top:30px; }
 	.wt-categorycontent:hover .wt-cattitle {top: 20%;}
-	.wt-categorycontent:hover .wt-categoryslidup{bottom: 20%;}
+	.wt-categorycontent:hover .wt-categoryslidup{bottom: 5%;}
 	.wt-footercol {margin-top:20px; }
 }
 @media (max-width:568px){
