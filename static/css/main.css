@@ -3816,6 +3816,83 @@ body.wt-login .wt-userlogedin{display: block;}
     padding: 30px;
     border-top: 1px solid #f2f2f2;
 }
+#adsBox
+{
+    width: 300px;
+    height: 419px;
+    background: #000;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+#adsBox input[type="checkbox"]
+{
+    position: relative;
+    width: 300px;
+    height: 419px;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+}
+#adsBox span
+{
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    pointer-events: none;
+    transform-style: preserve-3d;
+}
+#adsBox span.bg1
+{
+    left: 0;
+    background: url(../images/img1.jpg);
+    background-size: 300px;
+}
+#adsBox span.bg1::before
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/img2.jpg);
+    background-size: 300px;
+    transform-origin: right;
+    transition: 2s;
+    backface-visibility: hidden;
+}
+#adsBox  input[type="checkbox"]:checked ~ span.bg1::before
+{
+    transform: rotateY(180deg);
+}
+#adsBox span.bg2
+{
+    right: 0;
+    background: url(../images/img2.jpg);
+    background-size: 300px;
+    background-position-x: 150px;
+}
+#adsBox span.bg2::before
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/img1.jpg);
+    background-size: 300px;
+    background-position-x: 150px;
+    transform-origin: left;
+    transition: 2s;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+}
+#adsBox  input[type="checkbox"]:checked ~ span.bg2::before
+{
+    transform: rotateY(360deg);
+}
 .tg-qrcodeimg {
 	margin: 0;
 	width: auto;

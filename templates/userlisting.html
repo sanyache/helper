@@ -104,6 +104,11 @@
 													<div class="wt-codescanicons">
 														<span>Кондиціонери OLMO. Продаж, установка. вул.Братська 65. Магазин 'Ера'</span>									
 													</div>
+													<div class="imgBox" id='adsBox'>
+														<input type="checkbox" id="checkImg">
+														<span class="bg1"></span>
+														<span class="bg2"></span>
+													</div>
 												</div>
 											</div>
 											<!--End Ads block-->																							
@@ -151,5 +156,12 @@
 				</div>
 			</main>
 			<!--Main End-->
-{% endblock content %}			
+{% endblock content %}
+{% block extra_js %}
+<script type="text/javascript">
+	let img = document.getElementById('checkImg');
+	setInterval(() => img.checked = !img.checked, 4000);        
+</script>
+{% endblock extra_js %}
+
 			
